@@ -74,6 +74,11 @@ git pull origin main
 ### Pushing to Remote and Creating a Pull Request
 
 1. **Push to Remote and Create a Pull Request:** Push your feature branch to the remote repository and create a pull request on the GA GitHub webpage:
+If it is the first push from the branch : 
+```
+git push --set-upstream origin "feature/feature-name#123"
+```
+from the 2nd push you can use
 ```
 git push "feature/feature-name#123"
 ```
