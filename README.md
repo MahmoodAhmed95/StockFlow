@@ -11,7 +11,7 @@ StockFlow is a one-week Proof-of-Concept project that aims to simplify inventory
 At StockFlow, we believe that effective project management is key to delivering a successful software solution. We follow an Agile approach, which promotes flexibility, collaboration, and customer-centric development. Here's how we manage our project:
 
 ### Planning and Task Breakdown
-  ![Tasks Breakdown](Documentation\Images\TasksBreakdown.png)
+  ![Tasks Breakdown](Documentation/Images/TasksBreakdown.png)
 We break our project into small, manageable tasks, which are akin to mini-goals. These tasks are designed with the user in mind, ensuring that we address their needs and expectations. For example, "Users want to log in."
 
 ### Automated Kanban Board
@@ -19,11 +19,11 @@ We break our project into small, manageable tasks, which are akin to mini-goals.
 To keep track of our work, we use an automated Kanban board within GitHub. This digital to-do list comprises columns representing different stages of tasks, "Icebox," "Current Sprint," "In progress," "Reviewing," "Done," and "Postponed / Canceled." This visual representation helps us understand what needs to be done, what's currently in progress, and what has been completed.
 
 ### GitHub Issue System
-  ![GitHub Issue](Documentation\Images\GitHubIssues.png)
+  ![GitHub Issue](Documentation/Images/GitHubIssues.png)
 We utilize GitHub's issue system to describe and manage each task comprehensively. Think of it as a centralized hub for all task-related information. Here, we discuss what needs to be done, how to test it, and who is responsible for its completion.
 
 ### Assigning Tasks
-  ![Tasks Assigning](Documentation\Images\TaskAssigning.png)
+  ![Tasks Assigning](Documentation/Images/TaskAssigning.png)
 Documentation\Images\TaskAssigning.png
 Every task is assigned to a team member, ensuring clear accountability. This practice ensures that everyone knows who is responsible for what, ultimately leading to a more organized and efficient workflow.
 
