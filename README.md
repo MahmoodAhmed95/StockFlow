@@ -6,13 +6,46 @@ StockFlow is a one-week Proof-of-Concept project that aims to simplify inventory
 
 ## Planning Stage
 
-- **Project Management Board (Kanban):**
+## Project Management Approach
+
+At StockFlow, we believe that effective project management is key to delivering a successful software solution. We follow an Agile approach, which promotes flexibility, collaboration, and customer-centric development. Here's how we manage our project:
+
+### Planning and Task Breakdown
+  ![Tasks Breakdown](Documentation\Images\TasksBreakdown.png)
+We break our project into small, manageable tasks, which are akin to mini-goals. These tasks are designed with the user in mind, ensuring that we address their needs and expectations. For example, "Users want to log in."
+
+### Automated Kanban Board
   ![Kanban Board](Documentation/Images/Kanban.png)
-  - View our project's Kanban board for a visual representation of our project's progress and tasks.
-  
-- **Additional Planning Documents:**
-  - **Wireframes:** Sketches of each screen's user interface for the major functionality of the application.
-  - **Entity-Relationship-Diagram (ERD):** A diagram of the app's models (one per data entity) and the relationships between them.
+To keep track of our work, we use an automated Kanban board within GitHub. This digital to-do list comprises columns representing different stages of tasks, "Icebox," "Current Sprint," "In progress," "Reviewing," "Done," and "Postponed / Canceled." This visual representation helps us understand what needs to be done, what's currently in progress, and what has been completed.
+
+### GitHub Issue System
+  ![GitHub Issue](Documentation\Images\GitHubIssues.png)
+We utilize GitHub's issue system to describe and manage each task comprehensively. Think of it as a centralized hub for all task-related information. Here, we discuss what needs to be done, how to test it, and who is responsible for its completion.
+
+### Assigning Tasks
+  ![Tasks Assigning](Documentation\Images\TaskAssigning.png)
+Documentation\Images\TaskAssigning.png
+Every task is assigned to a team member, ensuring clear accountability. This practice ensures that everyone knows who is responsible for what, ultimately leading to a more organized and efficient workflow.
+
+### Benefits of Our Approach
+
+Our project management approach offers several advantages:
+
+- **Step-by-Step Progress:** Breaking the project into smaller tasks allows us to make steady progress, providing a sense of accomplishment with each completed task.
+
+- **Adaptability:** Agile methodologies make it easier for us to adapt to changes in requirements or priorities as we work on the project.
+
+- **Organization:** Our use of Kanban boards and GitHub issues helps us stay organized, ensuring that no task slips through the cracks.
+
+- **Efficient Teamwork:** Assigning tasks and using collaborative tools promotes teamwork and ensures that work is distributed evenly among team members.
+
+- **Quality Results:** Our approach prioritizes delivering high-quality software that meets user needs and expectations.
+
+We believe that by following these project management principles, we can efficiently develop StockFlow and provide an exceptional solution for micro home-based businesses.
+
+
+ 
+## Planning Documents:
 
 ### User Stories
 - As a user, I want to log in to the system to access inventory management and POS features.
@@ -27,9 +60,9 @@ StockFlow is a one-week Proof-of-Concept project that aims to simplify inventory
 ### Admin Stories (To Be Added)
 
 ### WireFrames (Coming Soon)
-
-### ERD
-
+Sketches of each screen's user interface for the major functionality of the application.
+### Entity-Relationship-Diagram (ERD)
+ A diagram of the app's models (one per data entity) and the relationships between them.
 ### Technologies Used
 
 - **Frontend:** React.js + Django
