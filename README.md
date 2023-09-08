@@ -52,9 +52,9 @@ git pull origin main
 ```
 
 2. **Create a New Branch for Your Design/Feature/Bug:** Create a new branch for the specific task you're working on. Name it descriptively and include the issue number in the branch name using #:
-- For design: `git checkout -b "design/design-name#123"`
-- For feature: `git checkout -b "feature/feature-name#123"`
-- For bug: `git checkout -b "bug/bug-name#123"`
+- For design: `git checkout -b "design/design-name#123`
+- For feature: `git checkout -b "feature/feature-name#123`
+- For bug: `git checkout -b "bug/bug-name#123`
 
 3. **Work on Your Task:** Make changes, write code, and complete your feature on the new branch.
 
@@ -85,7 +85,7 @@ git push "feature/feature-name#123"
 
 Open the repository on the [StockFlow Pulls webpage](https://git.generalassemb.ly/StockFlow/StockFlow-Alpha/pulls). Click on the "Compare & pull request" button for the feature branch you just pushed.
 
-2. **Review the changes in the pull request:** Mention the issue number in the pull request description to link it to the issue. Use "Closes #123" to indicate that the pull request will resolve the issue.
+2. **Review the changes in the pull request:** Mention the issue number in the pull request description to link it to the issue. Use `Closes #123` to indicate that the pull request will resolve the issue.
 
 3. **Click on "Create pull request."**
 
