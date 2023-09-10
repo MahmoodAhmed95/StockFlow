@@ -1,5 +1,5 @@
 from django.shortcuts import render
-
+from .models import Categories, Product,Customer,SaleOrder,SaleOrderLine,Vendor,PurchaseOrder,PurchaseOrderLine
 
 # Define the home view
 def home(request):
@@ -13,7 +13,8 @@ def category(request):
   return render(request, 'main_app/category.html')
 
 def product(request):
-  return render(request, 'main_app/product.html')
+  products = Product.objects.all()
+  return render(request, 'main_app/product.html',{'products':products})
 
 def purchase(request):
   return render(request, 'main_app/purchase.html')

@@ -1,6 +1,16 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1>Products</h1>
+<h1>Products</h1>
+{% for product in products %}
+<div>
+  <p>Name : {{product.name}}</p>
+  <p>Purchase Cost : {{product.purchaseCost}}</p>
+  <p>Sale Price : {{product.salePrice}}</p>
+  <p>Image : {{product.image}}</p>
+  <p>Category : {{product.categoryId}}</p>
+
+</div>
+{% endfor %}
+
 {% endblock %}
-  
