@@ -62,8 +62,14 @@ def addVendor(request):
 def editVendor(request):
   return render(request, 'main_app/vendor/editVendor.html')
 
-# edit product
+#product
+class productCreate(CreateView):
+  model = Product
+  fields = '__all__'
 class productUpdate(UpdateView):
   model = Product
   fields = ['name', 'purchaseCost', 'salePrice', 'image', 'categoryId']
+class productDelete(DeleteView):
+  model = Product
+  success_url = '/product/productList'
 
