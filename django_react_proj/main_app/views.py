@@ -1,5 +1,5 @@
 from django.shortcuts import render
-
+from .models import Category
 
 # Define the home view
 def home(request):
@@ -10,7 +10,10 @@ def about(request):
   return render(request, 'about.html')
 
 def category(request):
-  return render(request, 'main_app/category.html')
+  categories = Category.objects.all()
+  return render(request, 'main_app/category.html',{
+'categories': categories
+  })
 
 def product(request):
   return render(request, 'main_app/product.html')
