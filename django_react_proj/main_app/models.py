@@ -5,7 +5,6 @@ class Categories(models.Model):
     name = models.CharField(max_length=100)
     image = models.TextField()
     number = models.IntegerField()
-
 class Product(models.Model):
     name = models.CharField(max_length=100)
     purchaseCost= models.DecimalField(decimal_places=3)
@@ -16,9 +15,11 @@ class Customer(models.Model):
     name = models.CharField(max_length=100)
     phone = models.CharField(max_length=11)
     email = models.CharField(max_length=100)
+
 class SaleOrder(models.Model):
     saleDate= models.DateField()
     saleNote = models.TextField()
+    confirmed=models.BooleanField(default=False)
     customerId= models.ForeignKey(Customer)
 class SaleOrderLine(models.Model):
     quantity= models.IntegerField()
@@ -31,7 +32,9 @@ class Vendor(models.Model):
 class PurchaseOrder(models.Model):
     saleDate= models.DateField()
     saleNote = models.TextField()
+    confirmed=models.BooleanField(default=False)
     vendorId= models.ForeignKey(Vendor)
+
 class PurchaseOrderLine(models.Model):
     quantity= models.IntegerField()
     purchaseId= models.ForeignKey(PurchaseOrder)
