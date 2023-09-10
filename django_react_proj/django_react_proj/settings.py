@@ -80,8 +80,12 @@ WSGI_APPLICATION = 'django_react_proj.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'neondb',
+        'USER': 'mohd.s.aqeel',
+        'PASSWORD': 'XZysfNc6x0Ft',
+        'HOST': 'ep-winter-king-02364218.ap-southeast-1.aws.neon.tech',
+        'PORT': '5432',
     }
 }
 
