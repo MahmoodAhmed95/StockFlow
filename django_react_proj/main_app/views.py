@@ -31,7 +31,7 @@ class CategoryDelete(DeleteView):
   model = Categories
   success_url = '/categories/category'
 
-# product views
+# product views 
 def productList(request):
   products = Product.objects.all()
   return render(request, 'main_app/product/productList.html',{'products':products})
