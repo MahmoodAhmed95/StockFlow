@@ -93,7 +93,7 @@ class vendorUpdate(UpdateView):
 class vendorDelete(DeleteView):
   model = Vendor
   success_url = '/vendor/vendorList'
-  
+
 # customer
 class customerCreate(CreateView):
   model = Customer
@@ -104,3 +104,14 @@ class customerUpdate(UpdateView):
 class customerDelete(DeleteView):
   model = Customer
   success_url = '/customer/customerList'
+
+  # sale
+class saleCreate(CreateView):
+  model = SaleOrder
+  fields = '__all__'
+class saleUpdate(UpdateView):
+  model = SaleOrder
+  fields = ['saleDate', 'saleNote', 'confirmed','customerId']
+class saleDelete(DeleteView):
+  model = SaleOrder
+  success_url = '/sale/saleList'
