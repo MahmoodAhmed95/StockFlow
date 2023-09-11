@@ -1,5 +1,4 @@
-from django.shortcuts import render ,redirect, get_object_or_404
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.shortcuts import render,redirect, get_object_or_404
 from .models import Categories, Product,Customer,SaleOrder,SaleOrderLine,Vendor,PurchaseOrder,PurchaseOrderLine
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
@@ -20,7 +19,6 @@ def categories_detail(request, category_id):
     category = get_object_or_404(Categories, id=category_id)
     products = Product.objects.filter(categoryId=category)
     return render(request, 'main_app/categories/detail.html', {'category': category, 'products': products})
-
 class CategoryCreate(CreateView):
   model = Categories
   fields = ['name', 'number','image']
