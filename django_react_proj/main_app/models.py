@@ -65,8 +65,8 @@ class Vendor(models.Model):
         return reverse('vendorList')
 
 class PurchaseOrder(models.Model):
-    saleDate = models.DateField()
-    saleNote = models.TextField()
+    purchaseDate = models.DateField()
+    purchaseNote = models.TextField()
     confirmed = models.BooleanField(default=False)
     vendorId = models.ForeignKey(Vendor , on_delete=models.PROTECT)
 
@@ -74,7 +74,7 @@ class PurchaseOrder(models.Model):
         return f"Purchase Order ({self.id})"
 
     def get_absolute_url(self):
-        return reverse('purchaseorder_detail', kwargs={'PurchaseOrder_id': self.id})
+        return reverse('purchaseList')
 
 class PurchaseOrderLine(models.Model):
     quantity = models.IntegerField()
