@@ -1,5 +1,6 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import redirect, render, get_object_or_404
 from .models import Categories, Product,Customer,SaleOrder,SaleOrderLine,Vendor,PurchaseOrder,PurchaseOrderLine
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 # Define the home view
 def home(request):
@@ -8,17 +9,28 @@ def home(request):
 
 def about(request):
   return render(request, 'about.html')
-
+# Category View
 def category(request):
   categories = Categories.objects.all()
   return render(request, 'main_app/categories/category.html',{
 'categories': categories
   })
-
 def categories_detail(request, category_id):
     category = get_object_or_404(Categories, id=category_id)
     products = Product.objects.filter(categoryId=category)
     return render(request, 'main_app/categories/detail.html', {'category': category, 'products': products})
+class CategoryCreate(CreateView):
+  model = Categories
+  fields = ['name', 'number','image']
+
+class CategoryUpdate(UpdateView):
+  model = Categories
+  fields = ['name', 'number','image']
+  
+class CategoryDelete(DeleteView):
+  model = Categories
+  success_url = '/categories/category'
+
 
 # product views
 def productList(request):
