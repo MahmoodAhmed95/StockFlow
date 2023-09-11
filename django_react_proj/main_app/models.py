@@ -46,7 +46,7 @@ class SaleOrder(models.Model):
         return f"Sale Order ({self.id})"
 
     def get_absolute_url(self):
-        return reverse('saleorder_detail', kwargs={'SaleOrder': self.id})
+        return reverse('saleList')
 
 class SaleOrderLine(models.Model):
     quantity = models.IntegerField()
