@@ -11,30 +11,51 @@ def about(request):
 
 def category(request):
   categories = Categories.objects.all()
-  return render(request, 'main_app/category.html',{
+  return render(request, 'main_app/categories/category.html',{
 'categories': categories
   })
 
 def categories_detail(request, category_id):
     category = get_object_or_404(Categories, id=category_id)
     products = Product.objects.filter(categoryId=category)
-    return render(request, 'categories/detail.html', {'category': category, 'products': products})
+    return render(request, 'main_app/categories/detail.html', {'category': category, 'products': products})
 
 
-def product(request):
+
+# product views
+def productList(request):
   products = Product.objects.all()
-  return render(request, 'main_app/product.html',{'products':products})
-
-def purchase(request):
-  return render(request, 'main_app/purchase.html')
-
-def sale(request):
-  return render(request, 'main_app/sale.html')
-
-def customer(request):
-  return render(request, 'main_app/customer.html')
-
-def vendor(request):
-  return render(request, 'main_app/vendor.html')
-
+  return render(request, 'main_app/product/productList.html',{'products':products})
+def addProduct(request):
+  return render(request, 'main_app/product/addProduct.html')
+def editProduct(request):
+  return render(request, 'main_app/product/editProduct.html')
+# purchase view
+def purchaseList(request):
+  return render(request, 'main_app/purchase/purchaseList.html')
+def addPurchase(request):
+  return render(request, 'main_app/purchase/addPurchase.html')
+def editPurchase(request):
+  return render(request, 'main_app/purchase/editPurchase.html')
+# sale view
+def saleList(request):
+  return render(request, 'main_app/sale/saleList.html')
+def addSale(request):
+  return render(request, 'main_app/sale/addSale.html')
+def editSale(request):
+  return render(request, 'main_app/sale/editSale.html')
+# customer view
+def customerList(request):
+  return render(request, 'main_app/customer/customerList.html')
+def addCustomer(request):
+  return render(request, 'main_app/customer/addCustomer.html')
+def editCustomer(request):
+  return render(request, 'main_app/customer/editCustomer.html')
+# vendor view
+def vendorList(request):
+  return render(request, 'main_app/vendor/vendorList.html')
+def addVendor(request):
+  return render(request, 'main_app/vendor/addVendor.html')
+def editVendor(request):
+  return render(request, 'main_app/vendor/editVendor.html')
 
