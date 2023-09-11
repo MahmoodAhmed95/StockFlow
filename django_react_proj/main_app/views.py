@@ -12,7 +12,7 @@ def about(request):
 
 def category(request):
   categories = Categories.objects.all()
-  return render(request, 'main_app/category.html',{
+  return render(request, 'main_app/categories/category.html',{
 'categories': categories
   })
 
