@@ -101,10 +101,10 @@
 													<a class="me-3" href="product-details.html">
 														<img src="{% static '/img/icons/eye.svg' %}" alt="img">
 													</a>
-													<a class="me-3" href="/product/editProduct">
+													<a class="me-3" href="{% url 'product_update' product.id %}">
 														<img src="{% static '/img/icons/edit.svg' %}" alt="img">
 													</a>
-													<a class="confirm-text" href="javascript:void(0);">
+													<a class="confirm-text" href="{% url 'product_delete' product.id %}">
 														<img src="{% static '/img/icons/delete.svg' %}" alt="img">
 													</a>
 												</td>
