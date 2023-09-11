@@ -77,7 +77,7 @@
 												<th>Product Name</th>
 												<th>Category</th>
 												<th>Purchase Cost</th>
-                        <th>Sales Price</th>
+                        						<th>Sales Price</th>
 												<th>Qty On Hand</th>
 												<th>Inventory Valuation</th>
 												<th>Action</th>
@@ -93,14 +93,11 @@
 													<a href="javascript:void(0);">{{product.name}}</a>
 												</td>
 												<td>{{product.categoryId}}</td>
-												<td>{{product.purchaseCost}}</td>
-												<td>{{product.salePrice}}</td>
-												<td>100</td>
-                        <td>100</td>
+												<td>{{product.purchaseCost}} BD</td>
+												<td>{{product.salePrice}} BD</td>
+												<td>{{ product.qty_on_hand }}</td>
+                        						<td>{{ product.inventory_valuation }} BD</td>
 												<td>
-													<a class="me-3" href="product-details.html">
-														<img src="{% static '/img/icons/eye.svg' %}" alt="img">
-													</a>
 													<a class="me-3" href="{% url 'product_update' product.id %}">
 														<img src="{% static '/img/icons/edit.svg' %}" alt="img">
 													</a>

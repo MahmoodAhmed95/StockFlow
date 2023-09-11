@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect, get_object_or_404
 from .models import Categories, Product,Customer,SaleOrder,SaleOrderLine,Vendor,PurchaseOrder,PurchaseOrderLine
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.db.models import Sum
 
 # Define the home view
 def home(request):
@@ -34,6 +35,18 @@ class CategoryDelete(DeleteView):
 # product views 
 def productList(request):
   products = Product.objects.all()
+  for product in products:
+        # total purchased
+        total_purchased = PurchaseOrderLine.objects.filter(productId=product).aggregate(Sum('quantity'))['quantity__sum'] or 0
+        # total solded
+        total_sold = SaleOrderLine.objects.filter(productId=product).aggregate(Sum('quantity'))['quantity__sum'] or 0
+        # qty on hand 
+        qty_on_hand = total_purchased - total_sold
+        # Calculate Inventory Valuation by multiplying Purchase Cost and Qty On Hand
+        inventory_valuation = product.purchaseCost * qty_on_hand
+        # attach both to the product
+        product.qty_on_hand = qty_on_hand
+        product.inventory_valuation = inventory_valuation
   return render(request, 'main_app/product/productList.html',{'products':products})
 def addProduct(request):
   return render(request, 'main_app/product/addProduct.html')
