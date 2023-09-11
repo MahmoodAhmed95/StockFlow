@@ -20,8 +20,6 @@ def categories_detail(request, category_id):
     products = Product.objects.filter(categoryId=category)
     return render(request, 'main_app/categories/detail.html', {'category': category, 'products': products})
 
-
-
 # product views
 def productList(request):
   products = Product.objects.all()
