@@ -74,8 +74,8 @@
 									<table class="table  datanew">
 										<thead>
 											<tr>
-												<th>Sale Date</th>
 												<th>Sale Note</th>
+												<th>Sale Date</th>
 												<th>Sale Confirmation</th>
                         <th>Customer Name</th>
 												<th>Qty On Hand</th>
@@ -90,9 +90,9 @@
 													<a href="javascript:void(0);" class="product-img">
 														<img src="{% static '/img/product/product1.jpg' %}" alt="product">
 													</a>
-													<a href="javascript:void(0);">{{sale.saleDate}}</a>
+													<a href="javascript:void(0);">{{sale.saleNote}}</a>
 												</td>
-												<td>{{sale.saleNote}}</td>
+												<td>{{sale.saleDate}}</td>
 												<td>{{sale.confirmed}}</td>
 												<td>{{sale.customerId}}</td>
 												<td>100</td>
