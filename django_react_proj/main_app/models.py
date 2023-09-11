@@ -23,7 +23,7 @@ class Product(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('product_detail', kwargs={'Product_id': self.id})
+        return reverse('productList')
 
 class Customer(models.Model):
     name = models.CharField(max_length=100)

@@ -2,5 +2,11 @@
 
 {% block content %}
   <h1>Vendors</h1>
+  {% for vendor in vendors%}
+  <p>{{vendor.name}}</p>
+  <p>{{vendor.phone}}</p>
+  <p>{{vendor.email}}</p>
+{%endfor %}
+
 {% endblock %}
   
