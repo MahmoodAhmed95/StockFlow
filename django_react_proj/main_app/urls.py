@@ -4,8 +4,14 @@ from . import views
 urlpatterns = [
 path('', views.home, name='home'),
 path('about/', views.about, name='about'),
+#category Paths
 path('categories/category/', views.category, name='category'),
 path('category/<int:category_id>/', views.categories_detail, name='categories_detail'),
+path('categories/create/', views.CategoryCreate.as_view(), name='categories_create'),
+path('categories/<int:pk>/update/', views.CategoryUpdate.as_view(), name='categories_update'),
+path('categories/<int:pk>/delete/', views.CategoryDelete.as_view(), name='categories_delete'),
+
+# path('category/<int:category_id>/delete/', views.delete_category, name='delete_category'),
 # product paths
 path('product/productList/', views.productList, name='productList'),
 path('product/addProduct/', views.addProduct, name='addProduct'),

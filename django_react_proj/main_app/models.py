@@ -10,7 +10,7 @@ class Categories(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('categories_detail', kwargs={'Categories_id': self.id})
+        return reverse('category')
 
 class Product(models.Model):
     name = models.CharField(max_length=100)
