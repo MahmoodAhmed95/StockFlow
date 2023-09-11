@@ -23,6 +23,9 @@ path('product/<int:pk>/delete/', views.productDelete.as_view(), name='product_de
 path('purchase/purchaseList/', views.purchaseList, name='purchaseList'),
 path('purchase/addPurchase/', views.addPurchase, name='addPurchase'),
 path('purchase/editPurchase/', views.editPurchase, name='editPurchase'),
+path('purchase/create/', views.purchaseCreate.as_view(), name='purchase_create'),
+path('purchase/<int:pk>/update/', views.purchaseUpdate.as_view(), name='purchase_update'),
+path('purchase/<int:pk>/delete/', views.purchaseDelete.as_view(), name='purchase_delete'),
 # sale paths
 path('sale/saleList/', views.saleList, name='saleList'),
 path('sale/addSale/', views.addSale, name='addSale'),

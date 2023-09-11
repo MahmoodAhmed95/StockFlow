@@ -115,3 +115,14 @@ class saleUpdate(UpdateView):
 class saleDelete(DeleteView):
   model = SaleOrder
   success_url = '/sale/saleList'
+
+    # sale
+class purchaseCreate(CreateView):
+  model = PurchaseOrder
+  fields = '__all__'
+class purchaseUpdate(UpdateView):
+  model = PurchaseOrder
+  fields = ['saleDate', 'saleNote', 'confirmed','vendorId']
+class purchaseDelete(DeleteView):
+  model = PurchaseOrder
+  success_url = '/purchase/purchaseList'
