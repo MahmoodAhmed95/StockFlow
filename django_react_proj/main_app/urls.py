@@ -10,6 +10,7 @@ path('category/<int:category_id>/', views.categories_detail, name='categories_de
 path('product/productList/', views.productList, name='productList'),
 path('product/addProduct/', views.addProduct, name='addProduct'),
 path('product/editProduct/', views.editProduct, name='editProduct'),
+  path('product/<int:pk>/update/', views.productUpdate.as_view(), name='product_update'),
 # purchase paths
 path('purchase/purchaseList/', views.purchaseList, name='purchaseList'),
 path('purchase/addPurchase/', views.addPurchase, name='addPurchase'),

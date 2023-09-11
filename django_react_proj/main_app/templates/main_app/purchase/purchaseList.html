@@ -1,6 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1>Purchases</h1>
+<h1>Purchases</h1>
+{% for purchase in purchases%}
+<p>{{purchase.saleNote}}</p>
+<p>{{purchase.vendorId}}</p>
+<p>{{purchase.saleDate}}</p>
+<p>{{purchase.confirmed}}</p>
+{%endfor %}
+
 {% endblock %}
-  
