@@ -19,7 +19,6 @@ def categories_detail(request, category_id):
     category = get_object_or_404(Categories, id=category_id)
     products = Product.objects.filter(categoryId=category)
     return render(request, 'main_app/categories/detail.html', {'category': category, 'products': products})
-
 class CategoryCreate(CreateView):
   model = Categories
   fields = ['name', 'number','image']
@@ -31,6 +30,7 @@ class CategoryUpdate(UpdateView):
 class CategoryDelete(DeleteView):
   model = Categories
   success_url = '/categories/category'
+
 
 # product views
 def productList(request):
