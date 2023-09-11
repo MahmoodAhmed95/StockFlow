@@ -34,7 +34,7 @@ class Customer(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('customer_detail', kwargs={'Customer_id': self.id})
+        return reverse('customerList')
 
 class SaleOrder(models.Model):
     saleDate = models.DateField()
@@ -62,7 +62,7 @@ class Vendor(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('vendor_detail', kwargs={'Vendor_id': self.id})
+        return reverse('vendorList')
 
 class PurchaseOrder(models.Model):
     saleDate = models.DateField()
