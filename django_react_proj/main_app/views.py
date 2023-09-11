@@ -21,11 +21,11 @@ def categories_detail(request, category_id):
     return render(request, 'main_app/categories/detail.html', {'category': category, 'products': products})
 class CategoryCreate(CreateView):
   model = Categories
-  fields = ['name', 'number','image']
+  fields = ['name','image']
 
 class CategoryUpdate(UpdateView):
   model = Categories
-  fields = ['name', 'number','image']
+  fields = ['name','image']
   
 class CategoryDelete(DeleteView):
   model = Categories

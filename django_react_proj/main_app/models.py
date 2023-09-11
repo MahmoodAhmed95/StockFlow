@@ -4,7 +4,7 @@ from django.urls import reverse
 class Categories(models.Model):
     name = models.CharField(max_length=100)
     image = models.TextField()
-    number = models.IntegerField(unique=True, db_index=True)
+    # number = models.IntegerField(unique=True, db_index=True)
 
     def __str__(self):
         return self.name
