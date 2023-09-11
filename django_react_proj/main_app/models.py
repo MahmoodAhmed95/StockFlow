@@ -34,7 +34,7 @@ class Customer(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('customer_detail', kwargs={'Customer_id': self.id})
+        return reverse('customerList')
 
 class SaleOrder(models.Model):
     saleDate = models.DateField()
@@ -46,7 +46,7 @@ class SaleOrder(models.Model):
         return f"Sale Order ({self.id})"
 
     def get_absolute_url(self):
-        return reverse('saleorder_detail', kwargs={'SaleOrder': self.id})
+        return reverse('saleList')
 
 class SaleOrderLine(models.Model):
     quantity = models.IntegerField()
@@ -62,11 +62,11 @@ class Vendor(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('vendor_detail', kwargs={'Vendor_id': self.id})
+        return reverse('vendorList')
 
 class PurchaseOrder(models.Model):
-    saleDate = models.DateField()
-    saleNote = models.TextField()
+    purchaseDate = models.DateField()
+    purchaseNote = models.TextField()
     confirmed = models.BooleanField(default=False)
     vendorId = models.ForeignKey(Vendor , on_delete=models.PROTECT)
 
@@ -74,7 +74,7 @@ class PurchaseOrder(models.Model):
         return f"Purchase Order ({self.id})"
 
     def get_absolute_url(self):
-        return reverse('purchaseorder_detail', kwargs={'PurchaseOrder_id': self.id})
+        return reverse('purchaseList')
 
 class PurchaseOrderLine(models.Model):
     quantity = models.IntegerField()

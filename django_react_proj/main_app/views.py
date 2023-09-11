@@ -83,3 +83,46 @@ class productDelete(DeleteView):
   model = Product
   success_url = '/product/productList'
 
+# vendor
+class vendorCreate(CreateView):
+  model = Vendor
+  fields = '__all__'
+class vendorUpdate(UpdateView):
+  model = Vendor
+  fields = ['name', 'phone', 'email']
+class vendorDelete(DeleteView):
+  model = Vendor
+  success_url = '/vendor/vendorList'
+
+# customer
+class customerCreate(CreateView):
+  model = Customer
+  fields = '__all__'
+class customerUpdate(UpdateView):
+  model = Customer
+  fields = ['name', 'phone', 'email']
+class customerDelete(DeleteView):
+  model = Customer
+  success_url = '/customer/customerList'
+
+  # sale
+class saleCreate(CreateView):
+  model = SaleOrder
+  fields = '__all__'
+class saleUpdate(UpdateView):
+  model = SaleOrder
+  fields = ['saleDate', 'saleNote', 'confirmed','customerId']
+class saleDelete(DeleteView):
+  model = SaleOrder
+  success_url = '/sale/saleList'
+
+    # sale
+class purchaseCreate(CreateView):
+  model = PurchaseOrder
+  fields = '__all__'
+class purchaseUpdate(UpdateView):
+  model = PurchaseOrder
+  fields = ['saleDate', 'saleNote', 'confirmed','vendorId']
+class purchaseDelete(DeleteView):
+  model = PurchaseOrder
+  success_url = '/purchase/purchaseList'
