@@ -10,6 +10,7 @@ venv/
 env/
 
 # Node.js
+/node_modules
 node_modules/
 
 # React build
