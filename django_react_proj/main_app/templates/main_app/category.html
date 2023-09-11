@@ -2,5 +2,15 @@
 
 {% block content %}
   <h1>Category</h1>
+  {% for category in categories %}
+ 
+    <div class="card">
+        <div class="card-content">
+            <span class="card-title">{{ category.name }}</span>
+            <span class="card-title"> <a href="/category/{{ category.id }}"> <p>Products </p></span>
+            <!-- add an image here for category -->
+        </div>
+    </div>
+  </a>
+{% endfor %}
 {% endblock %}
-  

@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .models import Categories, Product,Customer,SaleOrder,SaleOrderLine,Vendor,PurchaseOrder,PurchaseOrderLine
 
 # Define the home view
@@ -10,7 +10,16 @@ def about(request):
   return render(request, 'about.html')
 
 def category(request):
-  return render(request, 'main_app/category.html')
+  categories = Categories.objects.all()
+  return render(request, 'main_app/category.html',{
+'categories': categories
+  })
+
+def categories_detail(request, category_id):
+    category = get_object_or_404(Categories, id=category_id)
+    products = Product.objects.filter(categoryId=category)
+    return render(request, 'categories/detail.html', {'category': category, 'products': products})
+
 
 def product(request):
   products = Product.objects.all()
