@@ -31,11 +31,11 @@
 						<div class="col-4 d-none d-sm-block">
 							<div class="dash-widget dash2">
 								<div class="dash-widgetimg">
-									<span><img src="{% static 'source/assets/img/icons/dash3.svg' %}" alt="img"></span>
+									<span><img src="{% static 'source/assets/img/icons/dash4.svg' %}" alt="img"></span>
 								</div>
 								<div class="dash-widgetcontent">
-									<h5>BD <span class="counters" data-count="11"></span></h5>
-									<h6>Inventory Valuation</h6>
+									<h5>BD <span class="counters" data-count="{{total_gross_revenue}}"></span></h5>
+									<h6>Gross Revenue</h6>
 								</div>
 							</div>
 						</div>
@@ -111,13 +111,13 @@
           </a>
         </div>
         <div class="col-lg-3 col-sm-6 col-12 d-flex">
-          <a href="/sale/saleList" class="dash-count das1 flex-column align-items-center justify-content-center text-center"
+          <a href="#" class="dash-count das1 flex-column align-items-center justify-content-center text-center"
           >
             <div class="dash-imgs mb-2">
               <i data-feather="file-text"></i>
             </div>
             <div class="dash-text">
-              <h4>Sales Order</h4>
+              <h4>Point Of Sales</h4>
             </div>
           </a>
         </div>
