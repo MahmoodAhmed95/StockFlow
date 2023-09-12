@@ -177,6 +177,8 @@ class customerDelete(DeleteView):
 # 
 # 
 def saleForm(request, sale_id=None):
+    customers = Customer.objects.all()
+    products = Product.objects.all()
     # Check if purchase_id is provided to determine if it's an update or add operation
     if sale_id:
         sale_instance = get_object_or_404(SaleOrder, pk=sale_id)
@@ -219,6 +221,9 @@ def saleForm(request, sale_id=None):
         'saleOrder_form': saleOrder_form,
         'saleOrderLine_form': saleOrderLine_form,
         'title': title,  # Pass the title to the template for distinguishing between add and update
+        'customers': customers,
+        'products': products,
+
     }
 
     return render(request, 'main_app/saleForm.html', context)
