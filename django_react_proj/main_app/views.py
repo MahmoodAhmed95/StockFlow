@@ -1,10 +1,14 @@
 # file : django_react_proj\main_app\views.py
 
 from django.shortcuts import render,redirect, get_object_or_404
+# from django.urls import reverse_lazy
+# from django.views.generic.edit import FormView
+from django.template.response import TemplateResponse
+from django.http import HttpResponseRedirect
 from .models import Categories, Product,Customer,SaleOrder,SaleOrderLine,Vendor,PurchaseOrder,PurchaseOrderLine
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.db.models import Sum, F
-
+from .forms import PurchaseOrderForm, PurchaseOrderLineForm
 # Define the home view
 def home(request):
   total_purchased_quantity = PurchaseOrderLine.objects.aggregate(Sum('quantity'))['quantity__sum'] or 0
@@ -143,12 +147,38 @@ class saleDelete(DeleteView):
   success_url = '/sale/saleList'
 
     # sale
-class purchaseCreate(CreateView):
-  model = PurchaseOrder
-  fields = '__all__'
+# class PurchaseCreate(CreateView):
+#   model = PurchaseOrderLine
+#   fields = '__all__'
+def purchaseView(request):
+  if request.method == 'POST':
+
+    PurchaseOrder_form = PurchaseOrderForm(request.POST)
+    PurchaseOrderLine_form = PurchaseOrderLineForm(request.POST)
+
+    if PurchaseOrder_form.is_valid() and PurchaseOrderLine_form.is_valid():
+
+        PurchaseOrder_form.save()
+        PurchaseOrderLine_form.save()
+        print('redirecting to purchase list...')
+        return HttpResponseRedirect('/purchase/purchaseList')        
+
+    else:
+        context = {
+            'PurchaseOrder_form': PurchaseOrder_form,
+            'PurchaseOrderLine_form': PurchaseOrderLine_form,
+        }
+
+  else:
+    context = {
+        'PurchaseOrder_form': PurchaseOrderForm(),
+        'PurchaseOrderLine_form': PurchaseOrderLineForm(),
+    }
+  print('redirecting to purchaseView')
+  return TemplateResponse(request, 'main_app/purchaseView.html', context)
 class purchaseUpdate(UpdateView):
-  model = PurchaseOrder
-  fields = ['saleDate', 'saleNote', 'confirmed','vendorId']
+  model = PurchaseOrder 
+  fields = ['purchaseDate', 'purchaseNote', 'confirmed','vendorId']
 class purchaseDelete(DeleteView):
   model = PurchaseOrder
   success_url = '/purchase/purchaseList'
