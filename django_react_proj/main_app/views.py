@@ -182,30 +182,69 @@ class saleDelete(DeleteView):
 # class PurchaseCreate(CreateView):
 #   model = PurchaseOrderLine
 #   fields = '__all__'
-def purchaseForm(request):
-  if request.method == 'POST':
+# def purchaseForm(request):
+  
+#   if request.method == 'POST':
 
-    PurchaseOrder_form = PurchaseOrderForm(request.POST)
-    PurchaseOrderLine_form = PurchaseOrderLineForm(request.POST)
+#     PurchaseOrder_form = PurchaseOrderForm(request.POST)
+#     PurchaseOrderLine_form = PurchaseOrderLineForm(request.POST)
 
-    if PurchaseOrder_form.is_valid() and PurchaseOrderLine_form.is_valid():
+#     if PurchaseOrder_form.is_valid() and PurchaseOrderLine_form.is_valid():
 
-        PurchaseOrder_form.save()
-        PurchaseOrderLine_form.save()
-        return HttpResponseRedirect('/purchase/purchaseList')        
+#         PurchaseOrder_form.save()
+#         PurchaseOrderLine_form.save()
+#         return HttpResponseRedirect('/purchase/purchaseList')        
+
+#     else:
+#         context = {
+#             'PurchaseOrder_form': PurchaseOrder_form,
+#             'PurchaseOrderLine_form': PurchaseOrderLine_form,
+#         }
+
+#   else:
+#     context = {
+#         'PurchaseOrder_form': PurchaseOrderForm(),
+#         'PurchaseOrderLine_form': PurchaseOrderLineForm(),
+#     }
+#   return TemplateResponse(request, 'main_app/purchaseForm.html', context)
+
+def purchaseForm(request, purchase_id=None):
+    # Check if sale_id is provided to determine if it's an update or add operation
+    if purchase_id:
+        purchase_instance = get_object_or_404(PurchaseOrder, pk=purchase_id)
+        title = "Update Purchase"
+    else:
+        purchase_instance = None
+        title = "Add Purchase"
+
+    if request.method == 'POST':
+        purchaseOrder_form = PurchaseOrderForm(request.POST, instance=purchase_instance)
+        purchaseOrderLine_form = PurchaseOrderLineForm(request.POST)
+
+        if purchaseOrder_form.is_valid() and purchaseOrderLine_form.is_valid():
+            # Save the SaleOrder instance (either a new one or an updated one)
+            purchase_order = purchaseOrder_form.save()
+
+            # Create a new SaleOrderLine instance
+            purchase_order_line = purchaseOrderLine_form.save(commit=False)
+            purchase_order_line.purchase_order = purchase_order
+            purchase_order_line.save()
+
+            return redirect('purchaseList')  # You should use the URL name
 
     else:
-        context = {
-            'PurchaseOrder_form': PurchaseOrder_form,
-            'PurchaseOrderLine_form': PurchaseOrderLine_form,
-        }
+        purchaseOrder_form = PurchaseOrderForm(instance=purchase_instance)
+        purchaseOrderLine_form = PurchaseOrderLineForm()
 
-  else:
     context = {
-        'PurchaseOrder_form': PurchaseOrderForm(),
-        'PurchaseOrderLine_form': PurchaseOrderLineForm(),
+        'purchaseOrder_form': purchaseOrder_form,
+        'purchaseOrderLine_form': purchaseOrderLine_form,
+        'title': title,  # Pass the title to the template for distinguishing between add and update
     }
-  return TemplateResponse(request, 'main_app/purchaseForm.html', context)
+
+    return render(request, 'main_app/purchaseForm.html', context)
+
+
 class purchaseUpdate(UpdateView):
   model = PurchaseOrder 
   fields = ['purchaseDate', 'purchaseNote', 'confirmed','vendorId']
