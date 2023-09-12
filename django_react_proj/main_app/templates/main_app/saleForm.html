@@ -1,12 +1,23 @@
 {% extends 'base.html' %}
-
+{% comment %} file : django_react_proj\main_app\templates\main_app\saleForm.html {% endcomment %}
 {% block content %}
 
 <form action="." method="POST">
   {% csrf_token %}
-  {{ saleOrder_form.as_p }}
-  {{ saleOrderLine_form.as_p }}
+  {{saleOrder_form.saleDate}}
+  {{saleOrder_form.saleNote}}
+  {{saleOrder_form.confirmed}}
+  {{saleOrder_form.customerId}}
+  {{ saleOrderLine_form.quantity }}
+  {{ saleOrderLine_form.productId }}
   <button type="submit">Submit!</button>
 </form>
 
 {% endblock %}
+
+{% comment %} quantity = models.IntegerField()
+    saleId = models.ForeignKey(SaleOrder , on_delete=models.PROTECT)
+    productId = models.ForeignKey(Product , on_delete=models.PROTECT) {% endcomment %}
+
+
+    
