@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% comment %} file : django_react_proj\main_app\templates\main_app\saleForm.html {% endcomment %}
 {% block content %}
-
+<h1>{{title}}</h1>
 <form action="." method="POST">
   {% csrf_token %}
   {{saleOrder_form.saleDate}}

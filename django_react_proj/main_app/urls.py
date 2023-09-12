@@ -25,7 +25,7 @@ path('purchase/editPurchase/', views.editPurchase, name='editPurchase'),
 path('purchase/create/', views.purchaseForm, name='purchaseForm'),
 # path('purchase/create/', views.PurchaseCreate.as_view(), name='purchase_create'),
 # path('purchase/create/', views.purchaseOrderLineCreate.as_view(), name='purchaseline_create'),
-path('purchase/<int:pk>/update/', views.purchaseUpdate.as_view(), name='purchase_update'),
+path('purchase/<int:purchase_id>/update/', views.purchaseForm, name='purchase_update'),
 path('purchase/<int:pk>/delete/', views.purchaseDelete.as_view(), name='purchase_delete'),
 # sale paths
 path('sale/saleList/', views.saleList, name='saleList'),

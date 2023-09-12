@@ -86,10 +86,10 @@
 							<tbody>
 								<tr>
 									<td class="productimgname">
-										<a href="javascript:void(0);" class="product-img">
-											<img src="{% static '/img/product/product1.jpg' %}" alt="product">
-										</a>
-										<a href="javascript:void(0);">{{product.name}}</a>
+										{% if product.image %}
+											<img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-fluid rounded-circle" style="width: 40px; height: 40px;" />
+										{% endif %}
+										<a href="javascript:void(0);">{{ product.name }}</a>
 									</td>
 									<td>{{product.categoryId}}</td>
 									<td>{{product.purchaseCost}} BD</td>
