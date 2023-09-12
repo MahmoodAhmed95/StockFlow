@@ -136,8 +136,48 @@ class customerDelete(DeleteView):
   success_url = '/customer/customerList'
 
 # sale
+# def saleForm(request, sale_id=None):
+#     # Check if sale_id is provided to determine if it's an update or add operation
+#     if sale_id:
+#         sale_instance = get_object_or_404(SaleOrder, pk=sale_id)
+#         title = "Update Sale"
+#     else:
+#         sale_instance = None
+#         title = "Add Sale"
+
+#     if request.method == 'POST':
+#         saleOrder_form = SaleOrderForm(request.POST, instance=sale_instance)
+#         saleOrderLine_form = SaleOrderLineForm(request.POST)
+
+#         if saleOrder_form.is_valid() and saleOrderLine_form.is_valid():
+#             # Save the SaleOrder instance (either a new one or an updated one)
+#             sale_order = saleOrder_form.save()
+
+#             # Create a new SaleOrderLine instance
+#             sale_order_line = saleOrderLine_form.save(commit=False)
+#             sale_order_line.sale_order = sale_order
+#             sale_order_line.save()
+
+#             return redirect('saleList')  # You should use the URL name
+
+#     else:
+#         saleOrder_form = SaleOrderForm(instance=sale_instance)
+#         saleOrderLine_form = SaleOrderLineForm()
+
+#     context = {
+#         'saleOrder_form': saleOrder_form,
+#         'saleOrderLine_form': saleOrderLine_form,
+#         'title': title,  # Pass the title to the template for distinguishing between add and update
+#     }
+
+#     return render(request, 'main_app/saleForm.html', context)
+# 
+# 
+# 
+# 
+# 
 def saleForm(request, sale_id=None):
-    # Check if sale_id is provided to determine if it's an update or add operation
+    # Check if purchase_id is provided to determine if it's an update or add operation
     if sale_id:
         sale_instance = get_object_or_404(SaleOrder, pk=sale_id)
         title = "Update Sale"
@@ -148,34 +188,45 @@ def saleForm(request, sale_id=None):
     if request.method == 'POST':
         saleOrder_form = SaleOrderForm(request.POST, instance=sale_instance)
         saleOrderLine_form = SaleOrderLineForm(request.POST)
-        
-        # Set saleId directly on the SaleOrderLineForm instance
-        saleOrderLine_form.instance.saleId = sale_instance
-
-        print('console post method')
-
         if saleOrder_form.is_valid():
-            print('sale order form is valid')
+            print("SaleOrder form is valid")
+
+            # Save the PurchaseOrder instance (either a new one or an updated one)
             sale_order = saleOrder_form.save()
-            print(f'sale_order type: {type(sale_order)}')
-            print(f'sale_order.id: {sale_order.id}')
-            saleOrderLine_form.id = sale_order.id
-            print(f'saleOrderLine_form.id: {saleOrderLine_form.id}')
-            # Check if saleOrderLine_form is valid before saving it
+
             if saleOrderLine_form.is_valid():
+                print("SaleOrderLine form is valid")
+
+                # Create a new PurchaseOrderLine instance without saving it yet
                 sale_order_line = saleOrderLine_form.save(commit=False)
-                sale_order_line.save()
-                print('sale order Line saved')
-                print(f'sale order Line saleId: {sale_order_line.saleId}')
-                return redirect('saleList')
-            else:
                 
-                print('SaleOrderLine form is not valid')
-                print(saleOrderLine_form.errors)
+                # Set the purchaseId of the PurchaseOrderLine to the saved PurchaseOrder instance
+                sale_order_line.saleId = sale_order
+                # Save the PurchaseOrderLine
+                sale_order_line.save()
+
+                return redirect('saleList')  # You should use the URL name
+            else:
+                print("SaleOrderLine form is not valid. Errors:", saleOrderLine_form.errors)
+        else:
+            print("SaleOrder form is not valid. Errors:", saleOrder_form.errors)
+
     else:
         saleOrder_form = SaleOrderForm(instance=sale_instance)
         saleOrderLine_form = SaleOrderLineForm()
 
+    context = {
+        'saleOrder_form': saleOrder_form,
+        'saleOrderLine_form': saleOrderLine_form,
+        'title': title,  # Pass the title to the template for distinguishing between add and update
+    }
+
+    return render(request, 'main_app/saleForm.html', context)
+# 
+# 
+# 
+# 
+# 
 class saleUpdate(UpdateView):
   model = SaleOrder
   fields = ['saleDate', 'saleNote', 'confirmed','customerId']
