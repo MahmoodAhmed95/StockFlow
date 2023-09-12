@@ -301,6 +301,8 @@ class saleDelete(DeleteView):
 #     return render(request, 'main_app/purchaseForm.html', context)
 
 def purchaseForm(request, purchase_id=None):
+    vendors = Vendor.objects.all()
+    products = Product.objects.all()
     # Check if purchase_id is provided to determine if it's an update or add operation
     if purchase_id:
         purchase_instance = get_object_or_404(PurchaseOrder, pk=purchase_id)
@@ -343,6 +345,8 @@ def purchaseForm(request, purchase_id=None):
         'purchaseOrder_form': purchaseOrder_form,
         'purchaseOrderLine_form': purchaseOrderLine_form,
         'title': title,  # Pass the title to the template for distinguishing between add and update
+        'vendors': vendors,
+        'products': products,
     }
 
     return render(request, 'main_app/purchaseForm.html', context)
