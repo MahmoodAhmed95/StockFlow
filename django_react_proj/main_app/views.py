@@ -8,7 +8,7 @@ from django.http import HttpResponseRedirect
 from .models import Categories, Product,Customer,SaleOrder,SaleOrderLine,Vendor,PurchaseOrder,PurchaseOrderLine
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.db.models import Sum, F
-from .forms import PurchaseOrderForm, PurchaseOrderLineForm
+from .forms import PurchaseOrderForm, PurchaseOrderLineForm ,SaleOrderForm,SaleOrderLineForm
 # Define the home view
 def home(request):
   total_purchased_quantity = PurchaseOrderLine.objects.aggregate(Sum('quantity'))['quantity__sum'] or 0
@@ -136,9 +136,33 @@ class customerDelete(DeleteView):
   success_url = '/customer/customerList'
 
   # sale
-class saleCreate(CreateView):
-  model = SaleOrder
-  fields = '__all__'
+# class saleCreate(CreateView):
+#   model = SaleOrder
+#   fields = '__all__'
+def saleView(request):
+  if request.method == 'POST':
+
+    saleOrder_form = SaleOrderForm(request.POST)
+    saleOrderLine_form = SaleOrderLineForm(request.POST)
+
+    if saleOrder_form.is_valid() and saleOrderLine_form.is_valid():
+
+        saleOrder_form.save()
+        saleOrderLine_form.save()
+        return HttpResponseRedirect('/sale/saleList')        
+
+    else:
+        context = {
+            'saleOrder_form': saleOrder_form,
+            'saleOrderLine_form': saleOrderLine_form,
+        }
+
+  else:
+    context = {
+        'saleOrder_form': SaleOrderForm(),
+        'saleOrderLine_form': SaleOrderLineForm(),
+    }
+  return TemplateResponse(request, 'main_app/saleView.html', context)
 class saleUpdate(UpdateView):
   model = SaleOrder
   fields = ['saleDate', 'saleNote', 'confirmed','customerId']
@@ -160,7 +184,6 @@ def purchaseView(request):
 
         PurchaseOrder_form.save()
         PurchaseOrderLine_form.save()
-        print('redirecting to purchase list...')
         return HttpResponseRedirect('/purchase/purchaseList')        
 
     else:
@@ -174,7 +197,6 @@ def purchaseView(request):
         'PurchaseOrder_form': PurchaseOrderForm(),
         'PurchaseOrderLine_form': PurchaseOrderLineForm(),
     }
-  print('redirecting to purchaseView')
   return TemplateResponse(request, 'main_app/purchaseView.html', context)
 class purchaseUpdate(UpdateView):
   model = PurchaseOrder 
