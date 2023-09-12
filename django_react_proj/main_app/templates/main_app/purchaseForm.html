@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
+<h1>{{title}}</h1>
 <form action="." method="POST">
   {% csrf_token %}
-  {{ PurchaseOrder_form.as_p }}
-  {{ PurchaseOrderLine_form.as_p }}
+  {{ purchaseOrder_form.as_p }}
+  {{ purchaseOrderLine_form.as_p }}
   <button type="submit">Submit!</button>
 </form>
 
