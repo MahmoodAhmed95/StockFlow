@@ -1,12 +1,22 @@
+# file : django_react_proj\main_app\views.py
+
 from django.shortcuts import render,redirect, get_object_or_404
 from .models import Categories, Product,Customer,SaleOrder,SaleOrderLine,Vendor,PurchaseOrder,PurchaseOrderLine
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.db.models import Sum
+from django.db.models import Sum, F
 
 # Define the home view
 def home(request):
+  total_purchased_quantity = PurchaseOrderLine.objects.aggregate(Sum('quantity'))['quantity__sum'] or 0
+  total_sold_quantity = SaleOrderLine.objects.aggregate(Sum('quantity'))['quantity__sum'] or 0
+  total_gross_revenue = SaleOrderLine.objects.aggregate(
+    total_gross_revenue=Sum(F('quantity') * F('productId__salePrice')))['total_gross_revenue'] or 0
   # Include an .html file extension - unlike when rendering EJS templates
-  return render(request, 'home.html')
+  return render(request, 'home.html', {
+        'total_purchased_quantity': total_purchased_quantity,
+        'total_sold_quantity': total_sold_quantity,
+        'total_gross_revenue': total_gross_revenue,
+    })
 
 def about(request):
   return render(request, 'about.html')

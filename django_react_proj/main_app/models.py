@@ -3,7 +3,7 @@ from django.urls import reverse
 
 class Categories(models.Model):
     name = models.CharField(max_length=100)
-    image = models.ImageField()
+    image = models.FileField(blank=True, null=True)
     # number = models.IntegerField(unique=True, db_index=True)
 
     def __str__(self):
@@ -16,7 +16,7 @@ class Product(models.Model):
     name = models.CharField(max_length=100)
     purchaseCost = models.DecimalField(decimal_places=3, max_digits=10)
     salePrice = models.DecimalField(decimal_places=3, max_digits=10)
-    image = models.TextField()
+    image = models.FileField(blank=True, null=True)
     categoryId = models.ForeignKey(Categories , on_delete=models.PROTECT)
 
     def __str__(self):
