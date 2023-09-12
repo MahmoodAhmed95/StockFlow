@@ -1,23 +1,73 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
-
+<div class="container">
+    <div class="page-wrapper page-wrapper-three">
+        <div class="content">
+            <div class="page-header">
+                <div class="page-title">
+                    <h4>Product Management</h4>
 {% if product %}
-<h1>Edit <span class="teal-text">{{ product.name }}</span></h1>
+                    <h6>Edit <span class="teal-text">{{ product.name }}</span></h6>
 {% else %}
-<h1>Add Product</h1>
+                    <h6>Add New Product</h6>
 {% endif %}
-
-
-<!-- Leaving the action empty makes the form post to the same url used to display it -->
-<form action="" method="POST">
-    <!-- Django requires the following for security purposes -->
-    {% csrf_token %}
-    <table>
-        <!-- Render the inputs inside of <tr>s & <td>s -->
-        {{ form.as_table }}
-    </table>
-    <input type="submit" value="Submit!" class="btn">
-</form>
-
+                </div>
+            </div>
+            <!-- /add -->
+                <div class="card">
+                    <!-- Leaving the action empty makes the form post to the same url used to display it -->
+                    <form action="" method="POST" enctype="multipart/form-data">
+                        <!-- Django requires the following for security purposes -->
+                        {% csrf_token %}
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="{{ form.name.id_for_label }}">Product Name</label>
+                                        {{ form.name }}
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label for="{{ form.purchaseCost.id_for_label }}">Purchase Cost</label>
+                                        {{ form.purchaseCost }}
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-12">
+                                    <div class="form-group">
+                                        <label for="{{ form.salePrice.id_for_label }}">Sale Price</label>
+                                        {{ form.salePrice }}
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+									<div class="form-group">
+										<label>	Product Image</label>
+										<div class="image-upload">
+											<input type="file" name="image" >
+											<div class="image-uploads">
+												<img src="{% static 'source/assets/img/icons/upload.svg' %}" alt="img">
+												<h4>Drag and drop a file to upload</h4>
+											</div>
+										</div>
+									</div>
+								</div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="{{ form.categoryId.id_for_label }}">Category</label>
+                                        {{ form.categoryId }}
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <input type="submit" value="Submit" class="btn btn-submit me-2">
+                                    <a href="javascript:void(0);" class="btn btn-cancel">Cancel</a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
 {% endblock %}
+                </div>
+            <!-- /add -->
+        </div>
+    </div>
+</div>
