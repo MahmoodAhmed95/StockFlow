@@ -13,6 +13,9 @@ def about(request):
 # Category View
 def category(request):
   categories = Categories.objects.all()
+  for category in categories:
+      total_products = Product.objects.filter(categoryId=category).count()
+      category.total_products = total_products
   return render(request, 'main_app/categories/category.html',{
 'categories': categories
   })
