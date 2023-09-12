@@ -135,34 +135,42 @@ class customerDelete(DeleteView):
   model = Customer
   success_url = '/customer/customerList'
 
-  # sale
-# class saleCreate(CreateView):
-#   model = SaleOrder
-#   fields = '__all__'
-def saleView(request):
-  if request.method == 'POST':
+# sale
+def saleForm(request, sale_id=None):
+    # Check if sale_id is provided to determine if it's an update or add operation
+    if sale_id:
+        sale_instance = get_object_or_404(SaleOrder, pk=sale_id)
+        title = "Update Sale"
+    else:
+        sale_instance = None
+        title = "Add Sale"
 
-    saleOrder_form = SaleOrderForm(request.POST)
-    saleOrderLine_form = SaleOrderLineForm(request.POST)
+    if request.method == 'POST':
+        saleOrder_form = SaleOrderForm(request.POST, instance=sale_instance)
+        saleOrderLine_form = SaleOrderLineForm(request.POST)
 
-    if saleOrder_form.is_valid() and saleOrderLine_form.is_valid():
+        if saleOrder_form.is_valid() and saleOrderLine_form.is_valid():
+            # Save the SaleOrder instance (either a new one or an updated one)
+            sale_order = saleOrder_form.save()
 
-        saleOrder_form.save()
-        saleOrderLine_form.save()
-        return HttpResponseRedirect('/sale/saleList')        
+            # Create a new SaleOrderLine instance
+            sale_order_line = saleOrderLine_form.save(commit=False)
+            sale_order_line.sale_order = sale_order
+            sale_order_line.save()
+
+            return redirect('saleList')  # You should use the URL name
 
     else:
-        context = {
-            'saleOrder_form': saleOrder_form,
-            'saleOrderLine_form': saleOrderLine_form,
-        }
+        saleOrder_form = SaleOrderForm(instance=sale_instance)
+        saleOrderLine_form = SaleOrderLineForm()
 
-  else:
     context = {
-        'saleOrder_form': SaleOrderForm(),
-        'saleOrderLine_form': SaleOrderLineForm(),
+        'saleOrder_form': saleOrder_form,
+        'saleOrderLine_form': saleOrderLine_form,
+        'title': title,  # Pass the title to the template for distinguishing between add and update
     }
-  return TemplateResponse(request, 'main_app/saleView.html', context)
+
+    return render(request, 'main_app/saleForm.html', context)
 class saleUpdate(UpdateView):
   model = SaleOrder
   fields = ['saleDate', 'saleNote', 'confirmed','customerId']
@@ -174,7 +182,7 @@ class saleDelete(DeleteView):
 # class PurchaseCreate(CreateView):
 #   model = PurchaseOrderLine
 #   fields = '__all__'
-def purchaseView(request):
+def purchaseForm(request):
   if request.method == 'POST':
 
     PurchaseOrder_form = PurchaseOrderForm(request.POST)
@@ -197,7 +205,7 @@ def purchaseView(request):
         'PurchaseOrder_form': PurchaseOrderForm(),
         'PurchaseOrderLine_form': PurchaseOrderLineForm(),
     }
-  return TemplateResponse(request, 'main_app/purchaseView.html', context)
+  return TemplateResponse(request, 'main_app/purchaseForm.html', context)
 class purchaseUpdate(UpdateView):
   model = PurchaseOrder 
   fields = ['purchaseDate', 'purchaseNote', 'confirmed','vendorId']
