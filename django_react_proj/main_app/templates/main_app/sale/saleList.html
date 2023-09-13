@@ -78,8 +78,8 @@
 												<th>Sale Date</th>
 												<th>Sale Confirmation</th>
                         <th>Customer Name</th>
-												<th>Qty On Hand</th>
-												<th>Inventory Valuation</th>
+												<!-- <th>Qty On Hand</th> -->
+												<!-- <th>Inventory Valuation</th> -->
 												<th>Action</th>
 											</tr>
 										</thead>
@@ -95,12 +95,12 @@
 												<td>{{sale.saleDate}}</td>
 												<td>{{sale.confirmed}}</td>
 												<td>{{sale.customerId}}</td>
-												<td>100</td>
-                        <td>100</td>
+												<!-- <td>100</td> -->
+                        <!-- <td>100</td> -->
 												<td>
-													<a class="me-3" href="product-details.html">
+													<!-- <a class="me-3" href="product-details.html">
 														<img src="{% static '/img/icons/eye.svg' %}" alt="img">
-													</a>
+													</a> -->
 													<a class="me-3" href="{% url 'sale_update' sale.id %}">
 														<img src="{% static '/img/icons/edit.svg' %}" alt="img">
 													</a>
