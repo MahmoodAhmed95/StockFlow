@@ -1,5 +1,9 @@
 # file : django_react_proj\main_app\views.py
-
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import login
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.utils.decorators import method_decorator
 from django.shortcuts import render,redirect, get_object_or_404
 # from django.urls import reverse_lazy
 # from django.views.generic.edit import FormView
@@ -11,6 +15,7 @@ from django.db.models import Sum, F
 from .forms import PurchaseOrderForm, PurchaseOrderLineForm ,SaleOrderForm,SaleOrderLineForm
 # Define the home view
 def home(request):
+  form = AuthenticationForm()
   total_purchased_quantity = PurchaseOrderLine.objects.aggregate(Sum('quantity'))['quantity__sum'] or 0
   total_sold_quantity = SaleOrderLine.objects.aggregate(Sum('quantity'))['quantity__sum'] or 0
   total_gross_revenue = SaleOrderLine.objects.aggregate(
@@ -19,12 +24,15 @@ def home(request):
   return render(request, 'home.html', {
         'total_purchased_quantity': total_purchased_quantity,
         'total_sold_quantity': total_sold_quantity,
-        'total_gross_revenue': total_gross_revenue,
+        'total_gross_revenue': total_gross_revenue, 'form':form,
     })
 
 def about(request):
   return render(request, 'about.html')
+
+
 # Category View
+@login_required
 def category(request):
   categories = Categories.objects.all()
   for category in categories:
@@ -33,23 +41,30 @@ def category(request):
   return render(request, 'main_app/categories/category.html',{
 'categories': categories
   })
+
+@login_required
 def categories_detail(request, category_id):
     category = get_object_or_404(Categories, id=category_id)
     products = Product.objects.filter(categoryId=category)
     return render(request, 'main_app/categories/detail.html', {'category': category, 'products': products})
+
+@method_decorator(login_required, name='dispatch')
 class CategoryCreate(CreateView):
   model = Categories
   fields = ['name','image']
 
+@method_decorator(login_required, name='dispatch')
 class CategoryUpdate(UpdateView):
   model = Categories
   fields = ['name','image']
   
+@method_decorator(login_required, name='dispatch')
 class CategoryDelete(DeleteView):
   model = Categories
   success_url = '/categories/category'
 
 # product views 
+@login_required
 def productList(request):
   products = Product.objects.all()
   for product in products:
@@ -65,50 +80,66 @@ def productList(request):
         product.qty_on_hand = qty_on_hand
         product.inventory_valuation = inventory_valuation
   return render(request, 'main_app/product/productList.html',{'products':products})
+
 def addProduct(request):
   return render(request, 'main_app/product/addProduct.html')
 def editProduct(request):
   return render(request, 'main_app/product/editProduct.html')
+
 # purchase view
+@login_required
 def purchaseList(request):
   purchases = PurchaseOrder.objects.all()
   return render(request, 'main_app/purchase/purchaseList.html',{'purchases':purchases})
+
 def addPurchase(request):
   return render(request, 'main_app/purchase/addPurchase.html')
 def editPurchase(request):
   return render(request, 'main_app/purchase/editPurchase.html')
+
 # sale view
+@login_required
 def saleList(request):
   sales = SaleOrder.objects.all()
   return render(request, 'main_app/sale/saleList.html',{'sales':sales})
+
 def addSale(request):
   return render(request, 'main_app/sale/addSale.html')
 def editSale(request):
   return render(request, 'main_app/sale/editSale.html')
+
 # customer view
+@login_required
 def customerList(request):
   customers = Customer.objects.all()
   return render(request, 'main_app/customer/customerList.html',{'customers':customers})
+
 def addCustomer(request):
   return render(request, 'main_app/customer/addCustomer.html')
 def editCustomer(request):
   return render(request, 'main_app/customer/editCustomer.html')
+
 # vendor view
+@login_required
 def vendorList(request):
   vendors = Vendor.objects.all()
   return render(request, 'main_app/vendor/vendorList.html', {'vendors':vendors})
+
 def addVendor(request):
   return render(request, 'main_app/vendor/addVendor.html')
 def editVendor(request):
   return render(request, 'main_app/vendor/editVendor.html')
 
 #product
+@method_decorator(login_required, name='dispatch')
 class productCreate(CreateView):
   model = Product
   fields = '__all__'
+@method_decorator(login_required, name='dispatch')
 class productUpdate(UpdateView):
   model = Product
   fields = ['name', 'purchaseCost', 'salePrice', 'image', 'categoryId']
+@method_decorator(login_required, name='dispatch')
 class productDelete(DeleteView):
   model = Product
   def delete(self, request, *args, **kwargs):
@@ -120,23 +151,29 @@ class productDelete(DeleteView):
       return JsonResponse({"message": "Item deleted successfully", "redirect_url": self.success_url})
 
 # vendor
+@method_decorator(login_required, name='dispatch')
 class vendorCreate(CreateView):
   model = Vendor
   fields = '__all__'
+@method_decorator(login_required, name='dispatch')
 class vendorUpdate(UpdateView):
   model = Vendor
   fields = ['name', 'phone', 'email']
+@method_decorator(login_required, name='dispatch')
 class vendorDelete(DeleteView):
   model = Vendor
   success_url = '/vendor/vendorList'
 
 # customer
+@method_decorator(login_required, name='dispatch')
 class customerCreate(CreateView):
   model = Customer
   fields = '__all__'
+@method_decorator(login_required, name='dispatch')
 class customerUpdate(UpdateView):
   model = Customer
   fields = ['name', 'phone', 'email']
+@method_decorator(login_required, name='dispatch')
 class customerDelete(DeleteView):
   model = Customer
   success_url = '/customer/customerList'
@@ -182,6 +219,7 @@ class customerDelete(DeleteView):
 # 
 # 
 # 
+@login_required
 def saleForm(request, sale_id=None):
     customers = Customer.objects.all()
     products = Product.objects.all()
@@ -238,9 +276,11 @@ def saleForm(request, sale_id=None):
 # 
 # 
 # 
+@method_decorator(login_required, name='dispatch')
 class saleUpdate(UpdateView):
   model = SaleOrder
   fields = ['saleDate', 'saleNote', 'confirmed','customerId']
+@method_decorator(login_required, name='dispatch')
 class saleDelete(DeleteView):
   model = SaleOrder
   success_url = '/sale/saleList'
@@ -310,7 +350,7 @@ class saleDelete(DeleteView):
 #     }
 
 #     return render(request, 'main_app/purchaseForm.html', context)
-
+@login_required
 def purchaseForm(request, purchase_id=None):
     vendors = Vendor.objects.all()
     products = Product.objects.all()
@@ -362,10 +402,31 @@ def purchaseForm(request, purchase_id=None):
 
     return render(request, 'main_app/purchaseForm.html', context)
 
-
+@method_decorator(login_required, name='dispatch')
 class purchaseUpdate(UpdateView):
   model = PurchaseOrder 
   fields = ['purchaseDate', 'purchaseNote', 'confirmed','vendorId']
+@method_decorator(login_required, name='dispatch')
 class purchaseDelete(DeleteView):
   model = PurchaseOrder
   success_url = '/purchase/purchaseList'
+
+# 
+# 
+# 
+def signup(request):
+  error_message = ''
+  if request.method == 'POST':
+    form = UserCreationForm(request.POST)
+    if form.is_valid():
+      # Save the user to the db
+      user = form.save()
+      # Automatically log in the new user
+      login(request, user)
+      return redirect('home')
+    else:
+      error_message = 'Invalid sign up - try again'
+    # A bad POST or a GET request, so render signup template
+  form = UserCreationForm()
+  context = {'form': form, 'error_message': error_message}
+  return render(request, 'registration/signup.html', context)

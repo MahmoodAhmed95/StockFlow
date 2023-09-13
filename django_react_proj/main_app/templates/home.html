@@ -3,6 +3,7 @@
 {% block content %}
 {% comment %} file : django_react_proj\main_app\templates\home.html {% endcomment %}
 <div class="container">
+  {% if user.is_authenticated %}
   <div class="page-wrapper page-wrapper-three">
     <div class="content">
       <div class="row">
@@ -135,6 +136,17 @@
       </div>
     </div>
   </div>
+  {%else%}
+
+<h1>Log In</h1>
+
+<form action="{% url 'login' %}" method="POST">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <input type="hidden" name="next" value="{{ next }}">
+  <button type="submit" class="btn">Log In</button>
+</form>
+  {%endif%}
 </div>
 
 {% endblock %}

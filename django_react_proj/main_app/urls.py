@@ -49,4 +49,6 @@ path('vendor/editVendor/', views.editVendor, name='editVendor'),
 path('vendor/create/', views.vendorCreate.as_view(), name='vendor_create'),
 path('vendor/<int:pk>/update/', views.vendorUpdate.as_view(), name='vendor_update'),
 path('vendor/<int:pk>/delete/', views.vendorDelete.as_view(), name='vendor_delete'),
+path('accounts/signup/', views.signup, name='signup'),
+
 ]
