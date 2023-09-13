@@ -27,6 +27,12 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
 
+    <!-- Datetimepicker CSS -->
+		<link rel="stylesheet" href="{% static 'css/bootstrap-datetimepicker.min.css' %}">
+
+    <!-- Select2 CSS -->
+		<link rel="stylesheet" href="{% static 'css/select2.min.css' %}">
+
     <!-- animation CSS -->
     <link rel="stylesheet" href="{% static 'css/animate.css' %}" />
 
@@ -51,6 +57,8 @@
 
     <!-- MY CSS -->
     <link rel="stylesheet" href="{% static 'css/mycss.css' %}" />
+
+
   </head>
   <body>
     <div id="global-loader">
@@ -321,6 +329,9 @@
 
     <!-- jQuery -->
     <script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+    
+    <!-- jQuery UI -->
+   <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.min.js" integrity="sha256-eTyxS0rkjpLEo16uXTS0uVCS4815lc40K2iVpWDvdSY=" crossorigin="anonymous"></script>
 
     <!-- Feather Icon JS -->
     <script src="{% static 'js/feather.min.js' %}"></script>
@@ -335,11 +346,26 @@
     <!-- Bootstrap Core JS -->
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
 
+    <!-- Select2 JS -->
+		<script src="{% static 'plugins/select2/js/select2.min.js' %}"></script>
+
+    <!-- Datetimepicker JS -->
+		<script src="{% static 'js/moment.min.js' %}"></script>
+		<script src="{% static 'js/bootstrap-datetimepicker.min.js' %}"></script>
+
+    <!-- Sweetalert 2 -->
+		<script src="{% static 'plugins/sweetalert/sweetalert2.all.min.js' %}"></script>
+		<script src="{% static 'plugins/sweetalert/sweetalerts.min.js' %}"></script>
+
     <!-- Chart JS -->
     <script src="{% static 'plugins/apexchart/apexcharts.min.js' %}"></script>
     <script src="{% static 'plugins/apexchart/chart-data.js' %}"></script>
 
     <!-- Custom JS -->
     <script src="{% static 'js/script.js' %}"></script>
+
+    <!-- My JS -->
+    <script src="{% static 'plugins/sweetalert/handleDeleteClick.js' %}"></script>
+
   </body>
 </html>

@@ -1,12 +1,183 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% load static %} {% block content %}
+<div class="container">
+  <div class="page-wrapper page-wrapper-three">
+    <div class="content">
+      <div class="page-header">
+        <div class="page-title">
+          <h4>Purchase Order Management</h4>
+          <h6>{{ title }}</h6>
+        </div>
+      </div>
+      <div class="card">
+        <form action="." method="POST">
+          {% csrf_token %}
+          <div class="card-body">
+            <div class="row">
+              <div class="col-lg-4 col-sm-12 col-12">
+                <div class="form-group">
+                  <label for="{{ purchaseOrder_form.vendorId.id_for_label }}">Vendor Name</label>
+                  <div class="input-group">
+                    <select class="form-select" id="{{ purchaseOrder_form.vendorId.id_for_label }}" name="{{ purchaseOrder_form.vendorId.name }}">
+                      <option disabled selected>Select Vendor</option>
+                      {% for vendor in vendors %}
+                        <option value="{{ vendor.id }}">{{ vendor.name }}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+              </div>
+                    <div class="col-lg-4 col-sm-12 col-12">
+                        <div class="form-group">
+                            <label for="{{ purchaseOrder_form.purchaseDate.id_for_label }}">Purchase Date</label>
+                            {{ purchaseOrder_form.purchaseDate }}
+                        </div>
+                    </div>
+                  <div class="col-lg-4 col-sm-12 col-12">
+                      <div class="form-group">
+                          <label for="{{ purchaseOrder_form.confirmed.id_for_label }}">Status</label>
+                          <select class="select" name="{{ purchaseOrder_form.confirmed.name }}" id="{{ purchaseOrder_form.confirmed.id_for_label }}">
+                              <option value="0" {% if purchaseOrder_form.confirmed.value == '0' %}selected{% endif %}>Draft</option>
+                              <option value="1" {% if purchaseOrder_form.confirmed.value == '1' %}selected{% endif %}>Confirmed</option>
+                          </select>
+                      </div>
+                  </div>
+            </div>
+            <div class="row">
+              <div class="col-8">
+                  <div class="form-group">
+                      <label for="{{ purchaseOrderLine_form.productId.id_for_label }}">Add Product To The Order</label>
+                      <select class="select" name="{{ purchaseOrderLine_form.productId.name }}" id="{{ purchaseOrderLine_form.productId.id_for_label }}">
+                          <option value="">Select a product</option>
+                          {% for product in products %}
+                              <option value="{{ product.id }}">{{ product.name }}</option>
+                          {% endfor %}
+                      </select>
+                  </div>
+              </div>
 
-{% block content %}
-<h1>{{title}}</h1>
-<form action="." method="POST">
-  {% csrf_token %}
-  {{ purchaseOrder_form.as_p }}
-  {{ purchaseOrderLine_form.as_p }}
-  <button type="submit">Submit!</button>
-</form>
 
+              <div class="col-4">
+                  <div class="form-group">
+                      <label for="{{ purchaseOrderLine_form.quantity.id_for_label }}">Quantity</label>
+                    <div class="row">
+											<div class="col-lg-10 col-sm-10 col-10">
+                        <input type="text" name="{{ purchaseOrderLine_form.quantity.name }}" id="{{ purchaseOrderLine_form.quantity.id_for_label }}" class="form-control">
+                      </div>
+											<div class="col-lg-2 col-sm-2 col-2 ps-0">
+												<div class="add-icon">
+													<span><img src="{% static 'source/assets/img/icons/plus1.svg' %}" alt="img"></span>
+												</div>
+											</div>
+                  </div>
+              </div>
+
+
+            </div>
+            <div class="row">
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Product Name</th>
+                      <th>QTY</th>
+                      <th>Purchase Price($)</th>
+                      <th>Discount($)</th>
+                      <th>Tax %</th>
+                      <th>Tax Amount($)</th>
+                      <th class="text-end">Unit Cost($)</th>
+                      <th class="text-end">Total Cost ($)</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="productimgname">
+                        <a class="product-img">
+                          <img
+                            src="{% static 'source/assets/img/product/product7.jpg' %}"
+                            alt="product"
+                          />
+                        </a>
+                        <a href="javascript:void(0);">Apple Earpods</a>
+                      </td>
+                      <td>10.00</td>
+                      <td>2000.00</td>
+                      <td>500.00</td>
+                      <td>0.00</td>
+                      <td>0.00</td>
+                      <td class="text-end">2000.00</td>
+                      <td class="text-end">2000.00</td>
+                      <td>
+                        <a class="delete-set"
+                          ><img
+                            src="{% static 'source/assets/img/icons/delete.svg' %}"
+                            alt="svg"
+                        /></a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="productimgname">
+                        <a class="product-img">
+                          <img
+                            src="{% static 'source/assets/img/product/product6.jpg' %}"
+                            alt="product"
+                          />
+                        </a>
+                        <a href="javascript:void(0);">Macbook Pro</a>
+                      </td>
+                      <td>15.00</td>
+                      <td>6000.00</td>
+                      <td>100.00</td>
+                      <td>0.00</td>
+                      <td>0.00</td>
+                      <td class="text-end">1000.00</td>
+                      <td class="text-end">1000.00</td>
+                      <td>
+                        <a class="delete-set"
+                          ><img
+                            src="{% static 'source/assets/img/icons/delete.svg' %}"
+                            alt="svg"
+                        /></a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-12 float-md-right">
+                <div class="total-order">
+                  <ul>
+                    <li class="total">
+                      <h4>Grand Total</h4>
+                      <h5>$ 0.00</h5>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                  <div class="form-group">
+                      <label for="{{ purchaseOrder_form.purchaseNote.id_for_label }}">Notes :</label>
+                      {{ purchaseOrder_form.purchaseNote }}
+                  </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-12">
+                <input
+                  type="submit"
+                  href="javascript:void(0);"
+                  class="btn btn-submit me-2"
+                />
+                <a href="purchaselist.html" class="btn btn-cancel">Cancel</a>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}

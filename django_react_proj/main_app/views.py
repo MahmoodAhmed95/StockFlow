@@ -4,7 +4,7 @@ from django.shortcuts import render,redirect, get_object_or_404
 # from django.urls import reverse_lazy
 # from django.views.generic.edit import FormView
 from django.template.response import TemplateResponse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from .models import Categories, Product,Customer,SaleOrder,SaleOrderLine,Vendor,PurchaseOrder,PurchaseOrderLine
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.db.models import Sum, F
@@ -111,7 +111,13 @@ class productUpdate(UpdateView):
   fields = ['name', 'purchaseCost', 'salePrice', 'image', 'categoryId']
 class productDelete(DeleteView):
   model = Product
-  success_url = '/product/productList'
+  def delete(self, request, *args, **kwargs):
+      # Perform the deletion logic
+      self.object = self.get_object()
+      self.object.delete()
+
+      # Return a JSON response indicating success
+      return JsonResponse({"message": "Item deleted successfully", "redirect_url": self.success_url})
 
 # vendor
 class vendorCreate(CreateView):
@@ -177,6 +183,8 @@ class customerDelete(DeleteView):
 # 
 # 
 def saleForm(request, sale_id=None):
+    customers = Customer.objects.all()
+    products = Product.objects.all()
     # Check if purchase_id is provided to determine if it's an update or add operation
     if sale_id:
         sale_instance = get_object_or_404(SaleOrder, pk=sale_id)
@@ -219,6 +227,9 @@ def saleForm(request, sale_id=None):
         'saleOrder_form': saleOrder_form,
         'saleOrderLine_form': saleOrderLine_form,
         'title': title,  # Pass the title to the template for distinguishing between add and update
+        'customers': customers,
+        'products': products,
+
     }
 
     return render(request, 'main_app/saleForm.html', context)
@@ -301,6 +312,8 @@ class saleDelete(DeleteView):
 #     return render(request, 'main_app/purchaseForm.html', context)
 
 def purchaseForm(request, purchase_id=None):
+    vendors = Vendor.objects.all()
+    products = Product.objects.all()
     # Check if purchase_id is provided to determine if it's an update or add operation
     if purchase_id:
         purchase_instance = get_object_or_404(PurchaseOrder, pk=purchase_id)
@@ -343,6 +356,8 @@ def purchaseForm(request, purchase_id=None):
         'purchaseOrder_form': purchaseOrder_form,
         'purchaseOrderLine_form': purchaseOrderLine_form,
         'title': title,  # Pass the title to the template for distinguishing between add and update
+        'vendors': vendors,
+        'products': products,
     }
 
     return render(request, 'main_app/purchaseForm.html', context)

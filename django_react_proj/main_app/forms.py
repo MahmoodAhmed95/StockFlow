@@ -5,6 +5,9 @@ class PurchaseOrderForm(forms.ModelForm):
     class Meta:
         model = PurchaseOrder
         fields = '__all__'
+        widgets = {
+            'purchaseDate': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+            }
 
 class PurchaseOrderLineForm(forms.ModelForm):
     class Meta:
