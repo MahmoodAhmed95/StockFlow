@@ -111,6 +111,7 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
+    
 ]
 
 
@@ -144,5 +145,11 @@ CLOUDINARY_STORAGE = {
     'API_KEY': '144687222953429',
     'API_SECRET': 'QrTDcb8zK7wOrFCGmpxrZSH7RuY'
 }
+
+STATIC_URL = 'static/'
+
+LOGIN_REDIRECT_URL = 'home'
+
+LOGOUT_REDIRECT_URL = 'home'
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'

@@ -61,6 +61,7 @@
 
   </head>
   <body>
+
     <div id="global-loader">
       <div class="whirly-loader"></div>
     </div>
@@ -83,7 +84,10 @@
         <!-- /Logo -->
 
         <!-- Header Menu -->
+        
         <ul class="nav user-menu">
+    {% if user.is_authenticated %}
+
           <li class="nav-item dropdown has-arrow main-drop ml-auto">
             <a
               href="javascript:void(0);"
@@ -118,7 +122,7 @@
                     <h5>Admin</h5>
                   </div>
                 </div>
-                <a class="dropdown-item logout pb-0" href="signin.html"
+                <a class="dropdown-item logout pb-0" href="{% url 'logout' %}"
                   ><img
                     src="{% static 'img/icons/log-out.svg' %}"
                     class="me-2"
@@ -128,9 +132,14 @@
               </div>
             </div>
           </li>
+          <!-- login and signup -->
+          {%else%}
+      <li><a href="{% url 'signup' %}">Sign Up</a></li>
+      <li><a href="{% url 'login' %}">Log In</a></li>
+          {%endif%}
         </ul>
+    {% if user.is_authenticated %}
         <!-- /Header Menu -->
-
         <a id="mobile_btn" class="mobile_btn" href="#sidebar">
           <span class="bar-icon">
             <span></span>
@@ -149,18 +158,20 @@
             ><i class="fa fa-ellipsis-v"></i
           ></a>
           <div class="dropdown-menu dropdown-menu-right">
-            <a class="dropdown-item" href="signin.html">Logout</a>
+            <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
           </div>
         </div>
         <!-- /Mobile Menu -->
       </div>
+      {% endif %}
+    
       <!-- Header -->
-
       <!-- Sidebar -->
       <div class="sidebar side-three new-header">
         <div class="container">
           <div id="sidebar-menu" class="sidebar-menu">
             <ul class="nav">
+    {% if user.is_authenticated %}
               <li class="submenu">
                 <a href="/"
                   ><img
@@ -230,6 +241,8 @@
                   <li><a href="/vendor/create">Add Vendor </a></li>
                 </ul>
               </li>
+            {% endif %}
+              
               <li class="submenu">
                 <a href="/"
                   ><img
@@ -323,6 +336,7 @@
         </div>
       </div>
       <!-- MOBILE /Sidebar -->
+    
       {% block content %} {% endblock %}
     </div>
     <!-- /Main Wrapper -->

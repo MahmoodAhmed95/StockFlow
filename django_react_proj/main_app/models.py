@@ -4,6 +4,7 @@ from django.db import models
 from django.urls import reverse
 import datetime
 
+from django.contrib.auth.models import User
 class Categories(models.Model):
     name = models.CharField(max_length=100)
     image = models.FileField(blank=True, null=True, upload_to='stock-flow-category-image')
