@@ -7,15 +7,15 @@
     <div class="content">
       <div class="row">
            <div class="col-4 d-none d-sm-block">
-							<div class="dash-widget">
-								<div class="dash-widgetimg">
-									<span><img src="{% static 'source/assets/img/icons/dash1.svg' %}" alt="img"></span>
-								</div>
-								<div class="dash-widgetcontent">
-									<h5><span class="counters" data-count="{{ total_purchased_quantity }}"></span></h5>
-									<h6>Total Purchased Quantity</h6>
-								</div>
-							</div>
+                <div class="dash-widget">
+                  <div class="dash-widgetimg">
+                    <span><img src="{% static 'source/assets/img/icons/dash1.svg' %}" alt="img"></span>
+                  </div>
+                  <div class="dash-widgetcontent">
+                    <h5><span class="counters" data-count="{{ total_purchased_quantity }}"></span></h5>
+                    <h6>Total Purchased Quantity</h6>
+                  </div>
+                </div>
 						</div>
 						<div class="col-4 d-none d-sm-block">
 							<div class="dash-widget dash1">
@@ -31,43 +31,40 @@
 						<div class="col-4 d-none d-sm-block">
 							<div class="dash-widget dash2">
 								<div class="dash-widgetimg">
-									<span><img src="{% static 'source/assets/img/icons/dash3.svg' %}" alt="img"></span>
+									<span><img src="{% static 'source/assets/img/icons/dash4.svg' %}" alt="img"></span>
 								</div>
 								<div class="dash-widgetcontent">
-									<h5><span class="counters" data-count="11"></span></h5>
-									<h6>Inventory Valuation</h6>
+									<h5>BD <span class="counters" data-count="{{total_gross_revenue}}"></span></h5>
+									<h6>Gross Revenue</h6>
 								</div>
 							</div>
 						</div>
       </div>
       <div class="row">
         <div class="col-lg-3 col-sm-6 col-12 d-flex">
-          <div
-          class="dash-count flex-column align-items-center justify-content-center text-center"
-          >
-          <div class="dash-imgs mb-2">
-            <i data-feather="user"></i>
-          </div>
-          <div class="dash-text">
-            <h4>Customer</h4>
-            </div>
-          </div>
+            <a href="/customer/customerList" class="dash-count flex-column align-items-center justify-content-center text-center">
+                    <div class="dash-imgs mb-2">
+                        <i data-feather="user" class="display-4"></i>
+                    </div>
+                    <div class="dash-text">
+                        <h4 class="mb-0">Customer</h4>
+                    </div>
+            </a>
         </div>
+
         <div class="col-lg-3 col-sm-6 col-12 d-flex">
-          <div
-            class="dash-count das1 flex-column align-items-center justify-content-center text-center"
-          >
-            <div class="dash-imgs mb-2">
-              <i data-feather="user-check"></i>
-            </div>
-            <div class="dash-text">
-              <h4>Vendor</h4>
-            </div>
-          </div>
+            <a href="/vendor/vendorList" class="dash-count das1 flex-column align-items-center justify-content-center text-center">
+                <div class="dash-imgs mb-2">
+                    <i data-feather="user-check"></i>
+                </div>
+                <div class="dash-text">
+                    <h4 class="mb-0">Vendor</h4>
+                </div>
+            </a>
         </div>
+        
         <div class="col-lg-3 col-sm-6 col-12 d-flex">
-          <div
-            class="dash-count das2 flex-column align-items-center justify-content-center text-center"
+          <a href="/sale/saleList" class="dash-count das2 flex-column align-items-center justify-content-center text-center"
           >
             <div class="dash-imgs mb-2">
               <i data-feather="file-text"></i>
@@ -75,11 +72,11 @@
             <div class="dash-text">
               <h4>Sales Order</h4>
             </div>
-          </div>
+          </a>
         </div>
+
         <div class="col-lg-3 col-sm-6 col-12 d-flex">
-          <div
-            class="dash-count das3 flex-column align-items-center justify-content-center text-center"
+          <a href="/purchase/purchaseList" class="dash-count das3 flex-column align-items-center justify-content-center text-center"
           >
             <div class="dash-imgs mb-2">
               <i data-feather="file"></i>
@@ -87,13 +84,12 @@
             <div class="dash-text">
               <h4>Purchase Order</h4>
             </div>
-          </div>
+          </a>
         </div>
       </div>
       <div class="row">
         <div class="col-lg-3 col-sm-6 col-12 d-flex">
-          <div
-            class="dash-count das3 flex-column align-items-center justify-content-center text-center"
+          <a href="/product/productList" class="dash-count das3 flex-column align-items-center justify-content-center text-center"
           >
             <div class="dash-imgs mb-2">
               <i data-feather="user"></i>
@@ -101,11 +97,10 @@
             <div class="dash-text">
               <h4>Product</h4>
             </div>
-          </div>
+          </a>
         </div>
         <div class="col-lg-3 col-sm-6 col-12 d-flex">
-          <div
-            class="dash-count das2 flex-column align-items-center justify-content-center text-center"
+          <a href="/categories/category" class="dash-count das2 flex-column align-items-center justify-content-center text-center"
           >
             <div class="dash-imgs mb-2">
               <i data-feather="user-check"></i>
@@ -113,23 +108,21 @@
             <div class="dash-text">
               <h4>Category</h4>
             </div>
-          </div>
+          </a>
         </div>
         <div class="col-lg-3 col-sm-6 col-12 d-flex">
-          <div
-            class="dash-count das1 flex-column align-items-center justify-content-center text-center"
+          <a href="#" class="dash-count das1 flex-column align-items-center justify-content-center text-center"
           >
             <div class="dash-imgs mb-2">
               <i data-feather="file-text"></i>
             </div>
             <div class="dash-text">
-              <h4>Sales Order</h4>
+              <h4>Point Of Sales</h4>
             </div>
-          </div>
+          </a>
         </div>
         <div class="col-lg-3 col-sm-6 col-12 d-flex">
-          <div
-            class="dash-count danger flex-column align-items-center justify-content-center text-center"
+          <a href="#" class="dash-count danger flex-column align-items-center justify-content-center text-center"
           >
             <div class="dash-imgs mb-2">
               <i data-feather="file"></i>
@@ -137,7 +130,7 @@
             <div class="dash-text">
               <h4>Logout</h4>
             </div>
-          </div>
+          </a>
         </div>
       </div>
     </div>

@@ -1,5 +1,8 @@
+# file django_react_proj\main_app\models.py
+
 from django.db import models
 from django.urls import reverse
+import datetime
 
 class Categories(models.Model):
     name = models.CharField(max_length=100)
@@ -37,7 +40,7 @@ class Customer(models.Model):
         return reverse('customerList')
 
 class SaleOrder(models.Model):
-    saleDate = models.DateField()
+    saleDate = models.DateField(default=datetime.date.today)
     saleNote = models.TextField()
     confirmed = models.BooleanField(default=False)
     customerId = models.ForeignKey(Customer , on_delete=models.PROTECT)
