@@ -4,7 +4,7 @@ from django.shortcuts import render,redirect, get_object_or_404
 # from django.urls import reverse_lazy
 # from django.views.generic.edit import FormView
 from django.template.response import TemplateResponse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from .models import Categories, Product,Customer,SaleOrder,SaleOrderLine,Vendor,PurchaseOrder,PurchaseOrderLine
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.db.models import Sum, F
@@ -111,7 +111,13 @@ class productUpdate(UpdateView):
   fields = ['name', 'purchaseCost', 'salePrice', 'image', 'categoryId']
 class productDelete(DeleteView):
   model = Product
-  success_url = '/product/productList'
+  def delete(self, request, *args, **kwargs):
+      # Perform the deletion logic
+      self.object = self.get_object()
+      self.object.delete()
+
+      # Return a JSON response indicating success
+      return JsonResponse({"message": "Item deleted successfully", "redirect_url": self.success_url})
 
 # vendor
 class vendorCreate(CreateView):
