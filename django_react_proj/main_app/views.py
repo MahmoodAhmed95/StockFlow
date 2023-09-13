@@ -10,6 +10,19 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.db.models import Sum, F
 from .forms import PurchaseOrderForm, PurchaseOrderLineForm ,SaleOrderForm,SaleOrderLineForm
 from rest_framework import serializers
+from rest_framework import viewsets
+from .serializers import ProductSerializer, CategoriesSerializer
+
+# Create your views here.
+
+class ProductViewSet(viewsets.ModelViewSet):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+
+class CategoriesViewSet(viewsets.ModelViewSet):
+    queryset = Categories.objects.all()
+    serializer_class = CategoriesSerializer
+
 # Define the home view
 def home(request):
   total_purchased_quantity = PurchaseOrderLine.objects.aggregate(Sum('quantity'))['quantity__sum'] or 0
@@ -50,10 +63,10 @@ class CategoryDelete(DeleteView):
   model = Categories
   success_url = '/categories/category'
 
-def product_list(request):
-    products = Product.objects.all()
-    serializer = ProductSerializer(products, many=True)
-    return JsonResponse(serializer.data, safe=False)
+# def product_list(request):
+#     products = Product.objects.all()
+#     serializer = ProductSerializer(products, many=True)
+#     return JsonResponse(serializer.data, safe=False)
 
 # product views 
 def productList(request):
