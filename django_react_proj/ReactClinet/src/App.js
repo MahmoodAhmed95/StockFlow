@@ -132,13 +132,13 @@ class App extends Component {
                     <CardMedia
                       component="img"
                       alt={product.name}
-                      height="200"
+                      height="201"
                       image={product.image}
                     />
                     <CardContent>
                       <Typography variant="h5">{product.name}</Typography>
                       <Typography variant="subtitle1">
-                        ${product.salePrice}
+                        BHD {product.salePrice}
                       </Typography>
                     </CardContent>
                     <Button
@@ -163,7 +163,7 @@ class App extends Component {
                   <ListItem key={cartItem.id}>
                     <ListItemText
                       primary={cartItem.name}
-                      secondary={`Qty ${cartItem.qty} - Total $${(
+                      secondary={`Qty ${cartItem.qty} - Total BHD ${(
                         cartItem.qty * cartItem.salePrice
                       ).toFixed(2)}`}
                     />
@@ -179,13 +179,24 @@ class App extends Component {
                     >
                       <RemoveIcon />
                     </IconButton>
+                   
                   </ListItem>
                 ))}
               </List>
               <Box mt={2}>
                 <Typography variant="h6">
-                  Total Price: ${this.getTotalPrice().toFixed(2)}
+                  Total Price: BHD {this.getTotalPrice().toFixed(2)}
                 </Typography>
+                <Link href="http://localhost:3000" color="inherit">
+                <Button
+                      variant="contained"
+                      color="secondary"
+                     
+                    >
+                      Checkout
+                    </Button>
+                </Link>
+                
               </Box>
             </Paper>
           </Grid>
