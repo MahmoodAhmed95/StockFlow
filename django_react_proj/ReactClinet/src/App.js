@@ -1,251 +1,200 @@
 import React, { Component } from "react";
 import axios from "axios";
 
+import {
+  Container,
+  Typography,
+  Grid,
+  Card,
+  CardContent,
+  CardMedia,
+  Button,
+  Box,
+  IconButton,
+  List,
+  ListItem,
+  ListItemText,
+  Paper,
+  AppBar,
+  Toolbar,
+  Link,
+} from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#1b2950"
+    },
+   secondary: {
+    main: "#ff9e43"
+   }
+  },
+});
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       productList: [],
-      categoriesList:[],
-      customerList:[],
-      vendorList:[],
-      saleOrderList:[],
-      saleOrderLineList:[],
-      purchaseOrderList:[],
-      purchaseOrderLineList:[],
+      cart: [],
     };
   }
 
   componentDidMount() {
     this.refreshList();
-    this.refreshCatList();
-    this.refreshCustomerList();
-    this.refreshVendorList();
-    this.refreshPurchaseList();
-    this.refreshPurchaseLineList();
-    this.refreshSaleList();
-    this.refreshSaleLineList();
   }
 
   refreshList = () => {
-    axios.get("http://localhost:8000/api/products").then((res) => {
-      this.setState({ productList: res.data });
-    }).catch((err) => {
-      if (err.response) {
-        // The request was made, but the server responded with an error status
-        console.error("Server responded with status code:", err.response.status);
-      } else if (err.request) {
-        // The request was made, but no response was received
-        console.error("No response received from the server");
-      } else {
-        // Something happened in setting up the request
-        console.error("Error:", err.message);
-      }
-    });};
-
-    refreshCatList = () => {
-      axios.get("http://localhost:8000/api/categories").then((res) => {
-        this.setState({ categoriesList: res.data });
-      }).catch((err) => {
+    axios
+      .get("http://localhost:8000/api/products")
+      .then((res) => {
+        this.setState({ productList: res.data });
+      })
+      .catch((err) => {
         if (err.response) {
-          // The request was made, but the server responded with an error status
           console.error("Server responded with status code:", err.response.status);
         } else if (err.request) {
-          // The request was made, but no response was received
           console.error("No response received from the server");
         } else {
-          // Something happened in setting up the request
           console.error("Error:", err.message);
         }
-      });};
-      refreshCustomerList = () => {
-        axios.get("http://localhost:8000/api/customer").then((res) => {
-          this.setState({ customerList: res.data });
-        }).catch((err) => {
-          if (err.response) {
-            // The request was made, but the server responded with an error status
-            console.error("Server responded with status code:", err.response.status);
-          } else if (err.request) {
-            // The request was made, but no response was received
-            console.error("No response received from the server");
-          } else {
-            // Something happened in setting up the request
-            console.error("Error:", err.message);
-          }
-        });};
-        refreshVendorList = () => {
-          axios.get("http://localhost:8000/api/vendor").then((res) => {
-            this.setState({ vendorList: res.data });
-          }).catch((err) => {
-            if (err.response) {
-              // The request was made, but the server responded with an error status
-              console.error("Server responded with status code:", err.response.status);
-            } else if (err.request) {
-              // The request was made, but no response was received
-              console.error("No response received from the server");
-            } else {
-              // Something happened in setting up the request
-              console.error("Error:", err.message);
-            }
-          });};
-          refreshPurchaseList = () => {
-            axios.get("http://localhost:8000/api/purchaseorderline").then((res) => {
-              this.setState({ purchaseOrderList: res.data });
-            }).catch((err) => {
-              if (err.response) {
-                // The request was made, but the server responded with an error status
-                console.error("Server responded with status code:", err.response.status);
-              } else if (err.request) {
-                // The request was made, but no response was received
-                console.error("No response received from the server");
-              } else {
-                // Something happened in setting up the request
-                console.error("Error:", err.message);
-              }
-            });};
-            refreshPurchaseLineList = () => {
-              axios.get("http://localhost:8000/api/purchaseorderline").then((res) => {
-                this.setState({ purchaseOrderLineList: res.data });
-              }).catch((err) => {
-                if (err.response) {
-                  // The request was made, but the server responded with an error status
-                  console.error("Server responded with status code:", err.response.status);
-                } else if (err.request) {
-                  // The request was made, but no response was received
-                  console.error("No response received from the server");
-                } else {
-                  // Something happened in setting up the request
-                  console.error("Error:", err.message);
-                }
-              });};
-              refreshSaleList = () => {
-                axios.get("http://localhost:8000/api/saleorder").then((res) => {
-                  this.setState({ saleOrderList: res.data });
-                }).catch((err) => {
-                  if (err.response) {
-                    // The request was made, but the server responded with an error status
-                    console.error("Server responded with status code:", err.response.status);
-                  } else if (err.request) {
-                    // The request was made, but no response was received
-                    console.error("No response received from the server");
-                  } else {
-                    // Something happened in setting up the request
-                    console.error("Error:", err.message);
-                  }
-                });};
-                refreshSaleLineList = () => {
-                  axios.get("http://localhost:8000/api/saleorderline").then((res) => {
-                    this.setState({ saleOrderLineList: res.data });
-                  }).catch((err) => {
-                    if (err.response) {
-                      // The request was made, but the server responded with an error status
-                      console.error("Server responded with status code:", err.response.status);
-                    } else if (err.request) {
-                      // The request was made, but no response was received
-                      console.error("No response received from the server");
-                    } else {
-                      // Something happened in setting up the request
-                      console.error("Error:", err.message);
-                    }
-                  });};
+      });
+  };
+
+  addToCart = (item) => {
+    const { cart } = this.state;
+    const existingItem = cart.find((cartItem) => cartItem.id === item.id);
+
+    if (existingItem) {
+      const updatedCart = cart.map((cartItem) =>
+        cartItem.id === item.id
+          ? { ...cartItem, qty: cartItem.qty + 1 }
+          : cartItem
+      );
+      this.setState({ cart: updatedCart });
+    } else {
+      this.setState({ cart: [...cart, { ...item, qty: 1 }] });
+    }
+  };
+
+  removeFromCart = (item) => {
+    const { cart } = this.state;
+    const existingItem = cart.find((cartItem) => cartItem.id === item.id);
+
+    if (existingItem) {
+      if (existingItem.qty > 1) {
+        const updatedCart = cart.map((cartItem) =>
+          cartItem.id === item.id
+            ? { ...cartItem, qty: cartItem.qty - 1 }
+            : cartItem
+        );
+        this.setState({ cart: updatedCart });
+      } else {
+        const updatedCart = cart.filter((cartItem) => cartItem.id !== item.id);
+        this.setState({ cart: updatedCart });
+      }
+    }
+  };
+
+  getTotalPrice = () => {
+    const { cart } = this.state;
+    return cart.reduce(
+      (total, cartItem) => total + cartItem.qty * cartItem.salePrice,
+      0
+    );
+  };
 
   render() {
     return (
-      <div className="container">
-        <a href="//localhost:8000"> Inventory Management</a>
-        <h1>Product List</h1>
-        <ul style={{ display:'flex'}}>
-          {this.state.productList.map((product) => (
-            <li key={product.id}>
-              <img src={product.image} alt="proimg" style={{ width: '200px', height: '200px' }}/>
-              <h2>{product.name}</h2>
-              <p>Purchase Cost: {product.purchaseCost}</p>
-              <p>Sale Price: {product.salePrice}</p>
-              <p>Product Category: {product.categoryId}</p>
-              {/* Add more product information here */}
-            </li>
-          ))}
-        </ul>
-        <h1>Categories List</h1>
-        <ul style={{ display:'flex'}}>
-          {this.state.categoriesList.map((category) => (
-            <li key={category.id}>
-              <img src={category.image} alt="catimg" style={{ width: '200px', height: '200px' }}/>
-              <h2>{category.name}</h2>
-              {/* Add more product information here */}
-            </li>
-          ))}
-        </ul>
-        <h1>Customer List</h1>
-        <ul style={{ display:'flex'}}>
-          {this.state.customerList.map((customer) => (
-            <li key={customer.id}>
-              <h2>{customer.name}</h2>
-              <p>Phone: {customer.phone}</p>
-              <p>Email: {customer.email}</p>
-              {/* Add more product information here */}
-            </li>
-          ))}
-        </ul>
-        <h1>vendor List</h1>
-        <ul style={{ display:'flex'}}>
-          {this.state.vendorList.map((vendor) => (
-            <li key={vendor.id}>
-              <h2>{vendor.name}</h2>
-              <p>Phone: {vendor.phone}</p>
-              <p>Email: {vendor.email}</p>
-              {/* Add more product information here */}
-            </li>
-          ))}
-        </ul>
-        <h1>Purchase Order List</h1>
-        <ul style={{ display:'flex'}}>
-          {this.state.purchaseOrderList.map((purchase) => (
-            <li key={purchase.id}>
-              <h2>{purchase.purchaseNote}</h2>
-              <p>Purchase Date: {purchase.purchaseDate}</p>
-              <p>Purchase Confirm: {purchase.confirmed}</p>
-              <p>Vendor Name: {purchase.vendorId}</p>
-              {/* Add more product information here */}
-            </li>
-          ))}
-        </ul>
-        <h1>Purchase Order Line List</h1>
-        <ul style={{ display:'flex'}}>
-          {this.state.purchaseOrderLineList.map((purchaseLine) => (
-            <li key={purchaseLine.id}>
-              <h2>{purchaseLine.productId}</h2>
-              <p>Purchase Quantity: {purchaseLine.quantity}</p>
-              <p>Purchase ID: {purchaseLine.purchaseId}</p>
-              {/* Add more product information here */}
-            </li>
-          ))}
-        </ul>
-        <h1>Sale Order List</h1>
-        <ul style={{ display:'flex'}}>
-          {this.state.saleOrderList.map((sale) => (
-            <li key={sale.id}>
-              <h2>{sale.saleNote}</h2>
-              <p>Sale Date: {sale.saleDate}</p>
-              <p>Sale Confirm: {sale.confirmed}</p>
-              <p>Customer ID: {sale.customerId}</p>
-              {/* Add more product information here */}
-            </li>
-          ))}
-        </ul>
-        <h1>Sale Order Line List</h1>
-        <ul style={{ display:'flex'}}>
-          {this.state.saleOrderLineList.map((saleLine) => (
-            <li key={saleLine.id}>
-              <h2>{saleLine.productId}</h2>
-              <p>Sale Quantity: {saleLine.quantity}</p>
-              <p>Sale ID: {saleLine.saleId}</p>
-              {/* Add more product information here */}
-            </li>
-          ))}
-        </ul>
-      </div>
-    );
+      <ThemeProvider theme={theme}>
+     
+          <Container>
+      
+            <AppBar position="static" color="primary">
+              <Toolbar>
+                <Link href="http://localhost:8000" color="inherit">
+                  <Typography variant="h6">Main</Typography>
+                </Link>
+              </Toolbar>
+            </AppBar>
+    
+            <Typography variant="h3" gutterBottom>
+              Products
+            </Typography>
+            <Grid container spacing={2}>
+          <Grid item xs={12} md={8}>
+            <Grid container spacing={2}>
+              {this.state.productList.map((product) => (
+                <Grid item xs={12} sm={6} md={4} key={product.id}>
+                  <Card>
+                    <CardMedia
+                      component="img"
+                      alt={product.name}
+                      height="200"
+                      image={product.image}
+                    />
+                    <CardContent>
+                      <Typography variant="h5">{product.name}</Typography>
+                      <Typography variant="subtitle1">
+                        ${product.salePrice}
+                      </Typography>
+                    </CardContent>
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      onClick={() => this.addToCart(product)}
+                    >
+                      Add to Cart
+                    </Button>
+                  </Card>
+                </Grid>
+              ))}
+            </Grid>
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <Paper elevation={3} style={{ padding: 16 }}>
+              <Typography variant="h5" gutterBottom>
+                Shopping Cart
+              </Typography>
+              <List>
+                {this.state.cart.map((cartItem) => (
+                  <ListItem key={cartItem.id}>
+                    <ListItemText
+                      primary={cartItem.name}
+                      secondary={`Qty ${cartItem.qty} - Total $${(
+                        cartItem.qty * cartItem.salePrice
+                      ).toFixed(2)}`}
+                    />
+                    <IconButton
+                      color="secondary"
+                      onClick={() => this.addToCart(cartItem)}
+                    >
+                      <AddIcon />
+                    </IconButton>
+                    <IconButton
+                      color="secondary"
+                      onClick={() => this.removeFromCart(cartItem)}
+                    >
+                      <RemoveIcon />
+                    </IconButton>
+                  </ListItem>
+                ))}
+              </List>
+              <Box mt={2}>
+                <Typography variant="h6">
+                  Total Price: ${this.getTotalPrice().toFixed(2)}
+                </Typography>
+              </Box>
+            </Paper>
+          </Grid>
+        </Grid>
+      </Container>
+      </ThemeProvider>
+          
+        );
+  
   }
 }
 
