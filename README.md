@@ -5,7 +5,6 @@ Inventory Management for Micro Home-Based Businesses (HBB)
 StockFlow is a one-week Proof-of-Concept project that aims to simplify inventory management and streamline the point of sale (POS) process for micro home-based businesses (HBBs). This system is designed to help HBB owners efficiently control their inventory and manage sales operations. In this initial phase of development, our primary focus will be on creating the Inventory Module and POS Module.
 
 ## Planning Stage
-
 ## Project Management Approach
 
 At StockFlow, we believe that effective project management is key to delivering a successful software solution. We follow an Agile approach, which promotes flexibility, collaboration, and customer-centric development. Here's how we manage our project:
@@ -57,10 +56,15 @@ We believe that by following these project management principles, we can efficie
 - As a user, I want to CRUD (Create, Read, Update, Delete) the delivery notes to track and control outgoing shipments.
 - As a user, I want to use the POS to register fast and quick sales invoices with visual product representation (pictures and colors) for a user-friendly experience.
 
-### Admin Stories (To Be Added)
+### Admin Stories
+- As an admin, I want to view/ add and remove users from the system. 
+- As an admin, I want to be able to add and remove categories and products from the database.
+- As an admin, I want to view the sales and purchase information for all products. 
 
-### WireFrames (Coming Soon)
-Sketches of each screen's user interface for the major functionality of the application.
+### WireFrames
+(Documentation/Images/UserView.png)(Documentation/Images/AdminView.png)
+
+Wireframes were created for the Proof-of-Concept project to have a better understanding of what the project should look like and have a clear understanding of the project by all team members. 
 ### Entity-Relationship-Diagram (ERD)
  A diagram of the app's models (one per data entity) and the relationships between them.
 ### Technologies Used
