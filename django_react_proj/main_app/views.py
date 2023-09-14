@@ -181,13 +181,15 @@ class productUpdate(UpdateView):
 @method_decorator(login_required, name='dispatch')
 class productDelete(DeleteView):
   model = Product
-  def delete(self, request, *args, **kwargs):
-      # Perform the deletion logic
-      self.object = self.get_object()
-      self.object.delete()
+  success_url = '/product/productList'
 
-      # Return a JSON response indicating success
-      return JsonResponse({"message": "Item deleted successfully", "redirect_url": self.success_url})
+  # def delete(self, request, *args, **kwargs):
+  #     # Perform the deletion logic
+  #     self.object = self.get_object()
+  #     self.object.delete()
+
+  #     # Return a JSON response indicating success
+  #     return JsonResponse({"message": "Item deleted successfully", "redirect_url": self.success_url})
 
 # vendor
 @method_decorator(login_required, name='dispatch')

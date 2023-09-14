@@ -68,7 +68,7 @@
 										{% comment %} <a class="confirm-text" href="{% url 'product_delete' product.id %}">
 											<img src="{% static '/img/icons/delete.svg' %}" alt="img">
 										</a> {% endcomment %}
-										<a class="confirm-text" data-item-type="product" data-item-id="{{product.id}}">
+										<a   href=" {% url 'product_delete' product.id %}"data-item-type="product" data-item-id="{{product.id}}">
 											<img src="{% static '/img/icons/delete.svg' %}" alt="img">
 										</a>
 									</td>
