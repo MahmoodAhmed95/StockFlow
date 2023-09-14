@@ -49,7 +49,7 @@
                       <select class="select" name="{{ purchaseOrderLine_form.productId.name }}" id="{{ purchaseOrderLine_form.productId.id_for_label }}">
                           <option value="">Select a product</option>
                           {% for product in products %}
-                              <option value="{{ product.id }}">{{ product.name }}</option>
+                              <option value="{{ product.id }}" data-purchase-cost="{{ product.purchaseCost }}" data-image-url="{{ product.image.url }}">{{ product.name }}</option>
                           {% endfor %}
                       </select>
                   </div>
@@ -64,15 +64,18 @@
                         <input type="text" name="{{ purchaseOrderLine_form.quantity.name }}" id="{{ purchaseOrderLine_form.quantity.id_for_label }}" class="form-control">
                       </div>
 											<div class="col-lg-2 col-sm-2 col-2 ps-0">
+												<button type="button" id="displayButton">
 												<div class="add-icon">
 													<span><img src="{% static 'source/assets/img/icons/plus1.svg' %}" alt="img"></span>
 												</div>
+                        </button>
 											</div>
                   </div>
               </div>
 
 
             </div>
+           
             <div class="row">
               <div class="table-responsive">
                 <table class="table">
@@ -80,77 +83,25 @@
                     <tr>
                       <th>Product Name</th>
                       <th>QTY</th>
-                      <th>Purchase Price($)</th>
-                      <th>Discount($)</th>
-                      <th>Tax %</th>
-                      <th>Tax Amount($)</th>
-                      <th class="text-end">Unit Cost($)</th>
-                      <th class="text-end">Total Cost ($)</th>
+                      <th class="text-end">Unit Price(BD)</th>
+                      <th class="text-end">Total Price (BD)</th>
                       <th></th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <tr>
-                      <td class="productimgname">
-                        <a class="product-img">
-                          <img
-                            src="{% static 'source/assets/img/product/product7.jpg' %}"
-                            alt="product"
-                          />
-                        </a>
-                        <a href="javascript:void(0);">Apple Earpods</a>
-                      </td>
-                      <td>10.00</td>
-                      <td>2000.00</td>
-                      <td>500.00</td>
-                      <td>0.00</td>
-                      <td>0.00</td>
-                      <td class="text-end">2000.00</td>
-                      <td class="text-end">2000.00</td>
-                      <td>
-                        <a class="delete-set"
-                          ><img
-                            src="{% static 'source/assets/img/icons/delete.svg' %}"
-                            alt="svg"
-                        /></a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="productimgname">
-                        <a class="product-img">
-                          <img
-                            src="{% static 'source/assets/img/product/product6.jpg' %}"
-                            alt="product"
-                          />
-                        </a>
-                        <a href="javascript:void(0);">Macbook Pro</a>
-                      </td>
-                      <td>15.00</td>
-                      <td>6000.00</td>
-                      <td>100.00</td>
-                      <td>0.00</td>
-                      <td>0.00</td>
-                      <td class="text-end">1000.00</td>
-                      <td class="text-end">1000.00</td>
-                      <td>
-                        <a class="delete-set"
-                          ><img
-                            src="{% static 'source/assets/img/icons/delete.svg' %}"
-                            alt="svg"
-                        /></a>
-                      </td>
-                    </tr>
+                  <!-- {% comment %} <div id="displayArea"></div> {% endcomment %} -->
+                  <tbody id="displayArea">
                   </tbody>
                 </table>
               </div>
             </div>
+
             <div class="row">
               <div class="col-lg-12 float-md-right">
                 <div class="total-order">
                   <ul>
                     <li class="total">
                       <h4>Grand Total</h4>
-                      <h5>$ 0.00</h5>
+                      <h5 id="grandTotal"></h5>
                     </li>
                   </ul>
                 </div>
@@ -175,9 +126,78 @@
               </div>
             </div>
           </div>
+          <input type="hidden" name="orderlines" id="orderlines">
+
         </form>
       </div>
     </div>
   </div>
 </div>
+<script>
+  // Get reference to the display button
+  const displayButton = document.getElementById('displayButton');
+  let orderlines = [];
+  let amounttotal = 0;
+  displayButton.addEventListener('click', function() {
+    console.log(`display button clicked`);
+    // Get references to the specific input fields and select elements
+    
+
+    const productId_input = document.getElementById('{{ purchaseOrderLine_form.productId.id_for_label }}');
+    const productId_index = productId_input.selectedIndex;
+
+    const quantity_input = document.getElementById('{{ purchaseOrderLine_form.quantity.id_for_label }}');
+    const quantity_value = quantity_input.value;
+
+    const productIdSelect = document.getElementById('{{ purchaseOrderLine_form.productId.id_for_label }}');
+    const selectedOption = productIdSelect.options[productIdSelect.selectedIndex];
+
+    const productName = productId_input.options[productId_index].text;
+
+    const purchaseCost = selectedOption.getAttribute('data-purchase-cost');
+    console.log('Selected Purchase Cost:', purchaseCost);
+
+    const productImage = selectedOption.getAttribute('data-image-url');
+    console.log('Selected Purchase Image:', productImage);
+
+    const totalCost = (purchaseCost * quantity_value).toFixed(3);
+    console.log(`totalcost : ${totalCost}`)
+    // Get reference to the display area
+    const displayArea = document.getElementById('displayArea');
+    // Create a new div element for each set of values
+    const div = document.createElement('tr');
+
+    // Initialize an array to store the values
+    const values = [];
+    
+    // Add the values to the values array
+    
+    values.push(`<td class="productimgname"> <a class="product-img"> <img src="${productImage}" alt="product"/> </a> ${productName} </td>`);
+    orderlines.push(productId_input.value);
+
+    values.push(`<td>${quantity_value} </td>`);
+    orderlines.push(quantity_value);
+
+    values.push(`<td class="text-end">${purchaseCost}</td>`);
+    values.push(`<td class="text-end">${totalCost}</td>`);
+
+    amounttotal += parseFloat(totalCost);
+    const formattedamounttotal = amounttotal.toFixed(3);
+    document.getElementById('grandTotal').innerHTML = `BD ${formattedamounttotal}`;
+    
+    values.push(`<td><a class="delete-set"><img src="/static/source/assets/img/icons/delete.svg" alt="Delete"></a>`);
+
+    console.log(`values : ${values}`)
+    console.log(`orderlines : ${orderlines}`)
+
+    document.getElementById('orderlines').value = orderlines.join(';'); // Use a separator like semicolon
+    
+    // Set the content of the new div to the collected values
+    div.innerHTML = values.join('</td>');
+
+    // Append the new div to the display area
+    displayArea.appendChild(div);    
+
+  });
+</script>
 {% endblock %}
