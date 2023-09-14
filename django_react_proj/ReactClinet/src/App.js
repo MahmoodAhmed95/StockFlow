@@ -21,7 +21,18 @@ import {
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
 
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#1b2950"
+    },
+   secondary: {
+    main: "#ff9e43"
+   }
+  },
+});
 class App extends Component {
   constructor(props) {
     super(props);
@@ -97,6 +108,7 @@ class App extends Component {
 
   render() {
     return (
+      <ThemeProvider theme={theme}>
      
           <Container>
       
@@ -131,7 +143,7 @@ class App extends Component {
                     </CardContent>
                     <Button
                       variant="contained"
-                      color="primary"
+                      color="secondary"
                       onClick={() => this.addToCart(product)}
                     >
                       Add to Cart
@@ -156,7 +168,7 @@ class App extends Component {
                       ).toFixed(2)}`}
                     />
                     <IconButton
-                      color="primary"
+                      color="secondary"
                       onClick={() => this.addToCart(cartItem)}
                     >
                       <AddIcon />
@@ -179,6 +191,7 @@ class App extends Component {
           </Grid>
         </Grid>
       </Container>
+      </ThemeProvider>
           
         );
   
