@@ -152,6 +152,7 @@ class App extends Component {
   render() {
     return (
       <div className="container">
+        <a href="//localhost:8000"> Inventory Management</a>
         <h1>Product List</h1>
         <ul style={{ display:'flex'}}>
           {this.state.productList.map((product) => (
@@ -165,6 +166,7 @@ class App extends Component {
             </li>
           ))}
         </ul>
+        <h1>Categories List</h1>
         <ul style={{ display:'flex'}}>
           {this.state.categoriesList.map((category) => (
             <li key={category.id}>
@@ -174,6 +176,7 @@ class App extends Component {
             </li>
           ))}
         </ul>
+        <h1>Customer List</h1>
         <ul style={{ display:'flex'}}>
           {this.state.customerList.map((customer) => (
             <li key={customer.id}>
@@ -184,6 +187,7 @@ class App extends Component {
             </li>
           ))}
         </ul>
+        <h1>vendor List</h1>
         <ul style={{ display:'flex'}}>
           {this.state.vendorList.map((vendor) => (
             <li key={vendor.id}>
@@ -194,6 +198,7 @@ class App extends Component {
             </li>
           ))}
         </ul>
+        <h1>Purchase Order List</h1>
         <ul style={{ display:'flex'}}>
           {this.state.purchaseOrderList.map((purchase) => (
             <li key={purchase.id}>
@@ -205,6 +210,7 @@ class App extends Component {
             </li>
           ))}
         </ul>
+        <h1>Purchase Order Line List</h1>
         <ul style={{ display:'flex'}}>
           {this.state.purchaseOrderLineList.map((purchaseLine) => (
             <li key={purchaseLine.id}>
@@ -215,6 +221,7 @@ class App extends Component {
             </li>
           ))}
         </ul>
+        <h1>Sale Order List</h1>
         <ul style={{ display:'flex'}}>
           {this.state.saleOrderList.map((sale) => (
             <li key={sale.id}>
@@ -226,6 +233,7 @@ class App extends Component {
             </li>
           ))}
         </ul>
+        <h1>Sale Order Line List</h1>
         <ul style={{ display:'flex'}}>
           {this.state.saleOrderLineList.map((saleLine) => (
             <li key={saleLine.id}>
