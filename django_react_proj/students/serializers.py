@@ -1,8 +1,10 @@
-from rest_framework import serializers
-from .models import Student
+# from rest_framework import serializers
+# from .models import Product
 
-class StudentSerializer(serializers.ModelSerializer):
+# class ProductSerializer(serializers.ModelSerializer):
+#     qty_on_hand = serializers.IntegerField(read_only=True)
+#     inventory_valuation = serializers.DecimalField(max_digits=10, decimal_places=3, read_only=True)
 
-    class Meta:
-        model = Student 
-        fields = ('pk', 'name', 'email', 'document', 'phone', 'registrationDate')
+#     class Meta:
+#         model = Product
+#         fields = ('id', 'name', 'purchaseCost', 'salePrice', 'qty_on_hand', 'inventory_valuation')

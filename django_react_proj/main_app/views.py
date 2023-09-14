@@ -13,7 +13,40 @@ from .models import Categories, Product,Customer,SaleOrder,SaleOrderLine,Vendor,
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.db.models import Sum, F
 from .forms import PurchaseOrderForm, PurchaseOrderLineForm ,SaleOrderForm,SaleOrderLineForm
+from rest_framework import serializers
+from rest_framework import viewsets
+from .serializers import ProductSerializer, CategoriesSerializer,CustomerSerializer,VendorSerializer,PurchaseOrderSerializer,PurchaseOrderLineSerializer,SaleOrderSerializer,SaleOrderLineSerializer
+
+# Create your views here.
+
+class ProductViewSet(viewsets.ModelViewSet):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+
+class CategoriesViewSet(viewsets.ModelViewSet):
+    queryset = Categories.objects.all()
+    serializer_class = CategoriesSerializer
+class CustomerViewSet(viewsets.ModelViewSet):
+    queryset = Customer.objects.all()
+    serializer_class = CustomerSerializer
+class VendorViewSet(viewsets.ModelViewSet):
+    queryset = Vendor.objects.all()
+    serializer_class = VendorSerializer
+class PurchaseOrderViewSet(viewsets.ModelViewSet):
+    queryset = PurchaseOrder.objects.all()
+    serializer_class = PurchaseOrderSerializer
+class PurchaseOrderLineViewSet(viewsets.ModelViewSet):
+    queryset = PurchaseOrderLine.objects.all()
+    serializer_class = PurchaseOrderLineSerializer
+class SaleOrderViewSet(viewsets.ModelViewSet):
+    queryset = SaleOrder.objects.all()
+    serializer_class = SaleOrderSerializer
+class SaleOrderLineViewSet(viewsets.ModelViewSet):
+    queryset = SaleOrderLine.objects.all()
+    serializer_class = SaleOrderLineSerializer
+
 from django.db import transaction
+
 # Define the home view
 def home(request):
   form = AuthenticationForm()
@@ -63,6 +96,11 @@ class CategoryUpdate(UpdateView):
 class CategoryDelete(DeleteView):
   model = Categories
   success_url = '/categories/category'
+
+# def product_list(request):
+#     products = Product.objects.all()
+#     serializer = ProductSerializer(products, many=True)
+#     return JsonResponse(serializer.data, safe=False)
 
 # product views 
 @login_required

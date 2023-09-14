@@ -16,12 +16,29 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, re_path, include
-from students import views
+from main_app import views
+from rest_framework import routers
+from main_app import views
+from rest_framework.routers import DefaultRouter
+from main_app import views
+router = routers.DefaultRouter()
+router.register(r'products', views.ProductViewSet)
+router.register(r'categories', views.CategoriesViewSet)
+router.register(r'customer', views.CustomerViewSet)
+router.register(r'vendor', views.VendorViewSet)
+router.register(r'purchaseorder', views.PurchaseOrderViewSet)
+router.register(r'purchaseorderline', views.PurchaseOrderLineViewSet)
+router.register(r'saleorder', views.SaleOrderViewSet)
+router.register(r'saleorderline', views.SaleOrderLineViewSet)
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    re_path(r'^api/students/$', views.students_list),
-    re_path(r'^api/students/([0-9])$', views.students_detail),
+    path('api/', include(router.urls)),
+    # re_path(r'^api/products/$', views.product_list),
+    # re_path(r'^api/products/([0-9])$', views.main_app),
     path('', include('main_app.urls')),
+    # path('api/', include(router.urls)),
     path('accounts/', include('django.contrib.auth.urls')),
+
 ]
