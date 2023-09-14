@@ -1,0 +1,190 @@
+{% extends 'base.html' %} 
+{% load static %}
+{% block content %}
+{% comment %} file : django_react_proj\main_app\templates\home.html {% endcomment %}
+<div class="container">
+  {% if user.is_authenticated %}
+  <div class="page-wrapper page-wrapper-three">
+    <div class="content">
+      <div class="row">
+           <div class="col-4 d-none d-sm-block">
+                <div class="dash-widget">
+                  <div class="dash-widgetimg">
+                    <span><img src="{% static 'source/assets/img/icons/dash1.svg' %}" alt="img"></span>
+                  </div>
+                  <div class="dash-widgetcontent">
+                    <h5><span class="counters" data-count="{{ total_purchased_quantity }}"></span></h5>
+                    <h6>Total Purchased Quantity</h6>
+                  </div>
+                </div>
+						</div>
+						<div class="col-4 d-none d-sm-block">
+							<div class="dash-widget dash1">
+								<div class="dash-widgetimg">
+									<span><img src="{% static 'source/assets/img/icons/dash2.svg' %}" alt="img"></span>
+								</div>
+								<div class="dash-widgetcontent">
+									<h5><span class="counters" data-count="{{ total_sold_quantity }}"></span></h5>
+									<h6>Total Sold Quantity</h6>
+								</div>
+							</div>
+						</div>
+						<div class="col-4 d-none d-sm-block">
+							<div class="dash-widget dash2">
+								<div class="dash-widgetimg">
+									<span><img src="{% static 'source/assets/img/icons/dash4.svg' %}" alt="img"></span>
+								</div>
+								<div class="dash-widgetcontent">
+									<h5>BD <span class="counters" data-count="{{total_gross_revenue}}"></span></h5>
+									<h6>Gross Revenue</h6>
+								</div>
+							</div>
+						</div>
+      </div>
+      <div class="row">
+        <div class="col-lg-3 col-sm-6 col-12 d-flex">
+            <a href="/customer/customerList" class="dash-count flex-column align-items-center justify-content-center text-center">
+                    <div class="dash-imgs mb-2">
+                        <i data-feather="user" class="display-4"></i>
+                    </div>
+                    <div class="dash-text">
+                        <h4 class="mb-0">Customer</h4>
+                    </div>
+            </a>
+        </div>
+
+        <div class="col-lg-3 col-sm-6 col-12 d-flex">
+            <a href="/vendor/vendorList" class="dash-count das1 flex-column align-items-center justify-content-center text-center">
+                <div class="dash-imgs mb-2">
+                    <i data-feather="user-check"></i>
+                </div>
+                <div class="dash-text">
+                    <h4 class="mb-0">Vendor</h4>
+                </div>
+            </a>
+        </div>
+        
+        <div class="col-lg-3 col-sm-6 col-12 d-flex">
+          <a href="/sale/saleList" class="dash-count das2 flex-column align-items-center justify-content-center text-center"
+          >
+            <div class="dash-imgs mb-2">
+              <i data-feather="file-text"></i>
+            </div>
+            <div class="dash-text">
+              <h4>Sales Order</h4>
+            </div>
+          </a>
+        </div>
+
+        <div class="col-lg-3 col-sm-6 col-12 d-flex">
+          <a href="/purchase/purchaseList" class="dash-count das3 flex-column align-items-center justify-content-center text-center"
+          >
+            <div class="dash-imgs mb-2">
+              <i data-feather="file"></i>
+            </div>
+            <div class="dash-text">
+              <h4>Purchase Order</h4>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-3 col-sm-6 col-12 d-flex">
+          <a href="/product/productList" class="dash-count das3 flex-column align-items-center justify-content-center text-center"
+          >
+            <div class="dash-imgs mb-2">
+              <i data-feather="user"></i>
+            </div>
+            <div class="dash-text">
+              <h4>Product</h4>
+            </div>
+          </a>
+        </div>
+        <div class="col-lg-3 col-sm-6 col-12 d-flex">
+          <a href="/categories/category" class="dash-count das2 flex-column align-items-center justify-content-center text-center"
+          >
+            <div class="dash-imgs mb-2">
+              <i data-feather="user-check"></i>
+            </div>
+            <div class="dash-text">
+              <h4>Category</h4>
+            </div>
+          </a>
+        </div>
+        <div class="col-lg-3 col-sm-6 col-12 d-flex">
+          <a href="//localhost:3000/" class="dash-count das1 flex-column align-items-center justify-content-center text-center"
+          >
+            <div class="dash-imgs mb-2">
+              <i data-feather="file-text"></i>
+            </div>
+            <div class="dash-text">
+              <h4>Point Of Sales</h4>
+            </div>
+          </a>
+        </div>
+        <div class="col-lg-3 col-sm-6 col-12 d-flex">
+          <a href="{% url 'logout' %}" class="dash-count danger flex-column align-items-center justify-content-center text-center"
+          >
+            <div class="dash-imgs mb-2">
+              <i data-feather="file"></i>
+            </div>
+            <div class="dash-text">
+              <h4>Logout</h4>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  {%else%}
+
+
+{% comment %} <h1>Log In</h1>
+
+<form action="{% url 'login' %}" method="POST">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <input type="hidden" name="next" value="{{ next }}">
+  <button type="submit" class="btn">Log In</button>
+</form> {% endcomment %}
+
+          <div class="page-wrapper page-wrapper-three">
+            <div class="content">
+              <div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2">
+                <div class="page-title">
+                  <h4>Login Required</h4>
+                  <h7>Please login to your account</h7>
+                  <br>
+                  <br>
+                </div>
+              </div>
+
+
+              <form action="{% url 'login' %}" method="POST">
+                {% csrf_token %}
+                    {% for field in form %}
+                      <div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2">
+                        <div class="form-group">
+                          {{ field.label_tag }}
+                          {{ field }}
+                          {{ field.help_text }}
+                        </div>
+                      </div>
+                    {% endfor %}
+                  <input type="hidden" name="next" value="{{ next }}">
+                  <div class="col-lg-12 text-center">
+                      <input type="submit" value="Login" href="javascript:void(0);" class="btn btn-submit me-2">
+                      <div class="signinform text-center">
+                          <h7>Don’t have an account? <a href="signup.html" class="hover-a">Sign Up</a></h7>
+                      </div>
+                  </div>
+              </form>
+            </div>
+          </div>
+
+  {%endif%}
+</div>
+
+{% endblock %}
+
+

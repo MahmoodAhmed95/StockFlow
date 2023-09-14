@@ -1,0 +1,209 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+<div class="container">
+  <div class="page-wrapper page-wrapper-three">
+    <div class="content">
+      <div class="page-header">
+        <div class="page-title">
+          <h4>Sales Order Management</h4>
+          <h6>{{ title }}</h6>
+        </div>
+      </div>
+      <div class="card">
+        <form action="." method="POST" id="myForm" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="card-body">
+            <div class="row">
+              <div class="col-lg-4 col-sm-12 col-12">
+                <div class="form-group">
+                  <label for="{{ saleOrder_form.customerId.id_for_label }}">Customer Name</label>
+                  <div class="input-group">
+                    <select class="form-select" id="{{ saleOrder_form.customerId.id_for_label }}" name="{{ saleOrder_form.customerId.name }}">
+                      <option disabled selected>Select Customer</option>
+                      {% for customer in customers %}
+                        <option value="{{ customer.id }}">{{ customer.name }}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+              </div>
+                    <div class="col-lg-4 col-sm-12 col-12">
+                        <div class="form-group">
+                            <label for="{{ saleOrder_form.saleDate.id_for_label }}">Sales Date</label>
+                            {{ saleOrder_form.saleDate }}
+                        </div>
+                    </div>
+                  <div class="col-lg-4 col-sm-12 col-12">
+                      <div class="form-group">
+                          <label for="{{ saleOrder_form.confirmed.id_for_label }}">Status</label>
+                          <select class="select" name="{{ saleOrder_form.confirmed.name }}" id="{{ saleOrder_form.confirmed.id_for_label }}">
+                              <option value="0" {% if saleOrder_form.confirmed.value == '0' %}selected{% endif %}>Draft</option>
+                              <option value="1" {% if saleOrder_form.confirmed.value == '1' %}selected{% endif %}>Confirmed</option>
+                          </select>
+                      </div>
+                  </div>
+            </div>
+            <div class="row">
+              <div class="col-8">
+                  <div class="form-group">
+                      <label for="{{ saleOrderLine_form.productId.id_for_label }}">Add Product To The Order</label>
+                      <select class="select" name="{{ saleOrderLine_form.productId.name }}" id="{{ saleOrderLine_form.productId.id_for_label }}">
+                          <option value="">Select a product</option>
+                          {% for product in products %}
+                              <option value="{{ product.id }}" data-purchase-cost="{{ product.salePrice }}" data-image-url="{{ product.image.url }}">{{ product.name }}</option>
+                          {% endfor %}
+                      </select>
+                  </div>
+              </div>
+
+
+              <div class="col-4">
+                  <div class="form-group">
+                      <label for="{{ saleOrderLine_form.quantity.id_for_label }}">Quantity</label>
+                    <div class="row">
+											<div class="col-lg-10 col-sm-10 col-10">
+                        <input type="text" name="{{ saleOrderLine_form.quantity.name }}" id="{{ saleOrderLine_form.quantity.id_for_label }}" class="form-control">
+                      </div>
+											<div class="col-lg-2 col-sm-2 col-2 ps-0">
+												<button type="button" id="displayButton">
+                        <div class="add-icon">
+													<span><img src="{% static 'source/assets/img/icons/plus1.svg' %}" alt="+"></span>
+												</div>
+                        </button>
+											</div>
+                  </div>
+              </div>
+
+
+            </div>
+
+            <div class="row">
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Product Name</th>
+                      <th>QTY</th>
+                      <th class="text-end">Unit Cost(BD)</th>
+                      <th class="text-end">Total Cost (BD)</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  {% comment %} <div id="displayArea"></div> {% endcomment %}
+                  <tbody id="displayArea">
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-12 float-md-right">
+                <div class="total-order">
+                  <ul>
+                    <li class="total">
+                      <h4>Grand Total</h4>
+                      <h5 id="grandTotal"></h5>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                  <div class="form-group">
+                      <label for="{{ saleOrder_form.saleNote.id_for_label }}">Notes :</label>
+                      {{ saleOrder_form.saleNote }}
+                  </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-12">
+                <input
+                  type="submit"
+                  href="javascript:void(0);"
+                  class="btn btn-submit me-2"
+                />
+                <a href="/sale/saleList" class="btn btn-cancel">Cancel</a>
+              </div>
+            </div>
+          </div>
+          <input type="hidden" name="orderlines" id="orderlines">
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<script>
+  // Get reference to the display button
+  const displayButton = document.getElementById('displayButton');
+  let orderlines = [];
+  let amounttotal = 0;
+  displayButton.addEventListener('click', function() {
+    console.log(`display button clicked`);
+    // Get references to the specific input fields and select elements
+    
+
+    const productId_input = document.getElementById('{{ saleOrderLine_form.productId.id_for_label }}');
+    const productId_index = productId_input.selectedIndex;
+
+    const quantity_input = document.getElementById('{{ saleOrderLine_form.quantity.id_for_label }}');
+    const quantity_value = quantity_input.value;
+
+    const productIdSelect = document.getElementById('{{ saleOrderLine_form.productId.id_for_label }}');
+    const selectedOption = productIdSelect.options[productIdSelect.selectedIndex];
+
+    const productName = productId_input.options[productId_index].text;
+
+    const purchaseCost = selectedOption.getAttribute('data-purchase-cost');
+    console.log('Selected Purchase Cost:', purchaseCost);
+
+    const productImage = selectedOption.getAttribute('data-image-url');
+    console.log('Selected Purchase Image:', productImage);
+
+    const totalCost = (purchaseCost * quantity_value).toFixed(3);
+    console.log(`totalcost : ${totalCost}`)
+    // Get reference to the display area
+    const displayArea = document.getElementById('displayArea');
+    // Create a new div element for each set of values
+    const div = document.createElement('tr');
+
+    // Initialize an array to store the values
+    const values = [];
+    
+    // Add the values to the values array
+    
+    values.push(`<td class="productimgname"> <a class="product-img"> <img src="${productImage}" alt="product"/> </a> ${productName} </td>`);
+    orderlines.push(productId_input.value);
+
+    values.push(`<td>${quantity_value} </td>`);
+    orderlines.push(quantity_value);
+
+    values.push(`<td class="text-end">${purchaseCost}</td>`);
+    values.push(`<td class="text-end">${totalCost}</td>`);
+
+    amounttotal += parseFloat(totalCost);
+    const formattedamounttotal = amounttotal.toFixed(3);
+    document.getElementById('grandTotal').innerHTML = `BD ${formattedamounttotal}`;
+    
+    values.push(`<td><a class="delete-set"><img src="/static/source/assets/img/icons/delete.svg" alt="Delete"></a>`);
+
+    console.log(`values : ${values}`)
+    console.log(`orderlines : ${orderlines}`)
+
+    document.getElementById('orderlines').value = orderlines.join(';'); // Use a separator like semicolon
+    
+    // Set the content of the new div to the collected values
+    div.innerHTML = values.join('</td>');
+
+    // Append the new div to the display area
+    displayArea.appendChild(div);
+
+    
+
+  });
+</script>
+
+{% endblock %}

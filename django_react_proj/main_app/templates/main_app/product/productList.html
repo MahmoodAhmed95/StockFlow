@@ -1,0 +1,86 @@
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+	<div class="page-wrapper page-wrapper-three">
+		<div class="content">
+			<div class="page-header">
+				<div class="page-title">
+					<h4>Product List</h4>
+				</div>
+				<div class="page-btn">
+					<a href="/product/create" class="btn btn-added">
+		<img src="{% static '/img/icons/plus.svg' %}" alt="img" class="me-1"></img>
+		Add New Product</a>
+				</div>
+			</div>
+			
+
+			<!-- /product list -->
+			<div class="card">
+				<div class="card-body">
+					<div class="table-top">
+						<div class="search-set">
+							<div class="search-path">
+								<a class="btn btn-filter" id="filter_search">
+									<img src="{% static '/img/icons/filter.svg' %}" alt="img">
+									<span><img src="{% static '/img/icons/closes.svg' %}" alt="img"></span>
+								</a>
+							</div>
+							<div class="search-input">
+								<a class="btn btn-searchset"><img src="{% static '/img/icons/search-white.svg' %}" alt="img"></a>
+							</div>
+						</div>
+					</div>
+					<div class="table-responsive">
+						<table class="table  datanew">
+							<thead>
+								<tr>
+									<th>Product Name</th>
+									<th>Category</th>
+									<th>Purchase Cost</th>
+									<th>Sales Price</th>
+									<th>Qty On Hand</th>
+									<th>Inventory Valuation</th>
+									<th>Action</th>
+								</tr>
+							</thead>
+					{% for product in products %}
+							<tbody>
+								<tr>
+									<td class="productimgname">
+										{% if product.image %}
+											<img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-fluid rounded-circle" style="width: 40px; height: 40px;" />
+										{% endif %}
+										<a href="javascript:void(0);">{{ product.name }}</a>
+									</td>
+									<td>{{product.categoryId}}</td>
+									<td>{{product.purchaseCost}} BD</td>
+									<td>{{product.salePrice}} BD</td>
+									<td>{{ product.qty_on_hand }}</td>
+									<td>{{ product.inventory_valuation }} BD</td>
+									<td>
+										<a class="me-3" href="{% url 'product_update' product.id %}">
+											<img src="{% static '/img/icons/edit.svg' %}" alt="img">
+										</a>
+										{% comment %} <a class="confirm-text" href="{% url 'product_delete' product.id %}">
+											<img src="{% static '/img/icons/delete.svg' %}" alt="img">
+										</a> {% endcomment %}
+										<a class="confirm-text" data-item-type="product" data-item-id="{{product.id}}">
+											<img src="{% static '/img/icons/delete.svg' %}" alt="img">
+										</a>
+									</td>
+								</tr>
+							</tbody>
+					{% endfor %}
+						</table>
+					</div>
+				</div>
+			</div>
+			<!-- /product list -->
+		</div>
+	</div>
+</div>
+{% endblock %}

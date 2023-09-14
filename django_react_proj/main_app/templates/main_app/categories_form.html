@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <div class="page-wrapper page-wrapper-three">
+        <div class="content">
+            <div class="page-header">
+                <div class="page-title">
+                    <h4>Category Management</h4>
+{% if object %}
+                    <h6>Edit <span class="teal-text">{{ object.name }}</span></h6>
+{% else %}
+                    <h6>Add new Category</h6>
+  {% endif %}
+                </div>
+            </div>
+            <!-- /add -->
+            <div class="card">
+
+                    <!-- Leaving the action empty makes the form post to the same url used to display it -->
+                    <form action="" method="POST" enctype="multipart/form-data">
+                        <!-- Django requires the following for security purposes -->
+                        {% csrf_token %}
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="{{ form.name.id_for_label }}">Category Name</label>
+                                        {{ form.name }}
+                                    </div>
+                                </div>
+								<div class="col-lg-12">
+									<div class="form-group">
+										<label>	Category Image</label>
+										<div class="image-upload">
+											<input type="file" name="image" >
+											<div class="image-uploads">
+												<img src="{% static 'source/assets/img/icons/upload.svg' %}" alt="img">
+												<h4>Drag and drop a file to upload</h4>
+											</div>
+										</div>
+									</div>
+								</div>
+                                <div class="col-lg-12">
+                                    <input type="submit" value="Submit" class="btn btn-submit me-2" >
+                                    <a href="/categories/category/"  class="btn btn-cancel">Cancel</a>
+                                </div>
+                            </div>
+                        </div>
+                        {% comment %} <input type="submit" value="Submit!" class="btn"> {% endcomment %}
+                    </form>
+{% endblock %}
+                </div>
+            <!-- /add -->
+        </div>
+    </div>
+</div>
