@@ -11,7 +11,7 @@ from django.db.models import Sum, F
 from .forms import PurchaseOrderForm, PurchaseOrderLineForm ,SaleOrderForm,SaleOrderLineForm
 from rest_framework import serializers
 from rest_framework import viewsets
-from .serializers import ProductSerializer, CategoriesSerializer
+from .serializers import ProductSerializer, CategoriesSerializer,CustomerSerializer,VendorSerializer,PurchaseOrderSerializer,PurchaseOrderLineSerializer,SaleOrderSerializer,SaleOrderLineSerializer
 
 # Create your views here.
 
@@ -22,7 +22,24 @@ class ProductViewSet(viewsets.ModelViewSet):
 class CategoriesViewSet(viewsets.ModelViewSet):
     queryset = Categories.objects.all()
     serializer_class = CategoriesSerializer
-
+class CustomerViewSet(viewsets.ModelViewSet):
+    queryset = Customer.objects.all()
+    serializer_class = CustomerSerializer
+class VendorViewSet(viewsets.ModelViewSet):
+    queryset = Vendor.objects.all()
+    serializer_class = VendorSerializer
+class PurchaseOrderViewSet(viewsets.ModelViewSet):
+    queryset = PurchaseOrder.objects.all()
+    serializer_class = PurchaseOrderSerializer
+class PurchaseOrderLineViewSet(viewsets.ModelViewSet):
+    queryset = PurchaseOrderLine.objects.all()
+    serializer_class = PurchaseOrderLineSerializer
+class SaleOrderViewSet(viewsets.ModelViewSet):
+    queryset = SaleOrder.objects.all()
+    serializer_class = SaleOrderSerializer
+class SaleOrderLineViewSet(viewsets.ModelViewSet):
+    queryset = SaleOrderLine.objects.all()
+    serializer_class = SaleOrderLineSerializer
 # Define the home view
 def home(request):
   total_purchased_quantity = PurchaseOrderLine.objects.aggregate(Sum('quantity'))['quantity__sum'] or 0

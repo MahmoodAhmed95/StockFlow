@@ -24,6 +24,12 @@ from main_app import views
 router = routers.DefaultRouter()
 router.register(r'products', views.ProductViewSet)
 router.register(r'categories', views.CategoriesViewSet)
+router.register(r'customer', views.CustomerViewSet)
+router.register(r'vendor', views.VendorViewSet)
+router.register(r'purchaseorder', views.PurchaseOrderViewSet)
+router.register(r'purchaseorderline', views.PurchaseOrderLineViewSet)
+router.register(r'saleorder', views.SaleOrderViewSet)
+router.register(r'saleorderline', views.SaleOrderLineViewSet)
 
 
 urlpatterns = [
