@@ -6,3 +6,9 @@
     position: absolute;
     z-index: 9999 !important;
 }
+
+.login-logo {
+    display: block;
+    margin-bottom: 25px;
+    max-width: 150px;
+}

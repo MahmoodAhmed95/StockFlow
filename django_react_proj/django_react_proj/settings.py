@@ -117,6 +117,7 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
+    
 ]
 
 
@@ -135,7 +136,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'Static/'
+STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / "main_app/Static/source/assets"]
 
 # Default primary key field type
@@ -150,5 +151,11 @@ CLOUDINARY_STORAGE = {
     'API_KEY': '144687222953429',
     'API_SECRET': 'QrTDcb8zK7wOrFCGmpxrZSH7RuY'
 }
+
+STATIC_URL = 'static/'
+
+LOGIN_REDIRECT_URL = 'home'
+
+LOGOUT_REDIRECT_URL = 'home'
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'

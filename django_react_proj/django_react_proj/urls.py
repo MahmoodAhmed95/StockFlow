@@ -39,4 +39,6 @@ urlpatterns = [
     # re_path(r'^api/products/([0-9])$', views.main_app),
     path('', include('main_app.urls')),
     # path('api/', include(router.urls)),
+    path('accounts/', include('django.contrib.auth.urls')),
+
 ]

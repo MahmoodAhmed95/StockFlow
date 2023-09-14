@@ -77,9 +77,9 @@
 												<th>Vendor Name</th>
 												<th>Vendor Mobile</th>
 												<th>Vendor Email</th>
-                        <th>Sales Price</th>
-												<th>Qty On Hand</th>
-												<th>Inventory Valuation</th>
+                        <!-- <th>Sales Price</th> -->
+												<!-- <th>Qty On Hand</th> -->
+												<!-- <th>Inventory Valuation</th> -->
 												<th>Action</th>
 											</tr>
 										</thead>
@@ -94,13 +94,13 @@
 												</td>
 												<td>{{vendor.phone}}</td>
 												<td>{{vendor.email}}</td>
-												<td>{{product.salePrice}}</td>
-												<td>100</td>
-                        <td>100</td>
+												<!-- <td>{{product.salePrice}}</td> -->
+												<!-- <td>100</td> -->
+                        <!-- <td>100</td> -->
 												<td>
-													<a class="me-3" href="product-details.html">
+													<!-- <a class="me-3" href="product-details.html">
 														<img src="{% static '/img/icons/eye.svg' %}" alt="img">
-													</a>
+													</a> -->
 													<a class="me-3" href="{% url 'vendor_update' vendor.id %}">
 														<img src="{% static '/img/icons/edit.svg' %}" alt="img">
 													</a>

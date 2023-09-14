@@ -1,5 +1,5 @@
 {% load static %}
-
+{% comment %} file : django_react_proj\main_app\templates\base.html {% endcomment %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -61,6 +61,7 @@
 
   </head>
   <body>
+
     <div id="global-loader">
       <div class="whirly-loader"></div>
     </div>
@@ -70,7 +71,7 @@
       <div class="header header-three">
         <!-- Logo -->
         <div class="header-left active">
-          <a href="index.html" class="logo logo-normal">
+          <a href="/" class="logo logo-normal">
             <img src="{% static 'img/logo.png' %}" alt="" />
           </a>
           <a href="index.html" class="logo logo-white">
@@ -83,7 +84,10 @@
         <!-- /Logo -->
 
         <!-- Header Menu -->
+        
         <ul class="nav user-menu">
+    {% if user.is_authenticated %}
+
           <li class="nav-item dropdown has-arrow main-drop ml-auto">
             <a
               href="javascript:void(0);"
@@ -91,34 +95,20 @@
               data-bs-toggle="dropdown"
             >
               <span class="user-info">
-                <span class="user-letter">
-                  <img
-                    src="{% static 'img/profiles/avator1.jpg' %}"
-                    alt=""
-                    class="img-fluid"
-                  />
-                </span>
                 <span class="user-detail">
-                  <span class="user-name">UserName</span>
-                  <span class="user-role">Admin</span>
+                  <span class="user-name">Exit</span>
                 </span>
               </span>
             </a>
             <div class="dropdown-menu menu-drop-user">
               <div class="profilename">
                 <div class="profileset">
-                  <span class="user-img"
-                    ><img
-                      src="{% static 'img/profiles/avator1.jpg' %}"
-                      alt="" />
-                    <span class="status online"></span
-                  ></span>
                   <div class="profilesets">
-                    <h6>UserName</h6>
-                    <h5>Admin</h5>
+                    <h6>Have a great day!</h6>
+                    <h5>see you again soon!</h5>
                   </div>
                 </div>
-                <a class="dropdown-item logout pb-0" href="signin.html"
+                <a class="dropdown-item logout pb-0" href="{% url 'logout' %}"
                   ><img
                     src="{% static 'img/icons/log-out.svg' %}"
                     class="me-2"
@@ -128,9 +118,14 @@
               </div>
             </div>
           </li>
+          <!-- login and signup -->
+          {%else%}
+      <li><a href="{% url 'signup' %}">Sign Up</a></li>
+      <li><a href="{% url 'login' %}">Log In</a></li>
+          {%endif%}
         </ul>
+    {% if user.is_authenticated %}
         <!-- /Header Menu -->
-
         <a id="mobile_btn" class="mobile_btn" href="#sidebar">
           <span class="bar-icon">
             <span></span>
@@ -149,18 +144,20 @@
             ><i class="fa fa-ellipsis-v"></i
           ></a>
           <div class="dropdown-menu dropdown-menu-right">
-            <a class="dropdown-item" href="signin.html">Logout</a>
+            <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
           </div>
         </div>
         <!-- /Mobile Menu -->
       </div>
+      {% endif %}
+    
       <!-- Header -->
-
       <!-- Sidebar -->
       <div class="sidebar side-three new-header">
         <div class="container">
           <div id="sidebar-menu" class="sidebar-menu">
             <ul class="nav">
+    {% if user.is_authenticated %}
               <li class="submenu">
                 <a href="/"
                   ><img
@@ -230,6 +227,8 @@
                   <li><a href="/vendor/create">Add Vendor </a></li>
                 </ul>
               </li>
+            {% endif %}
+              
               <li class="submenu">
                 <a href="/"
                   ><img
@@ -323,6 +322,7 @@
         </div>
       </div>
       <!-- MOBILE /Sidebar -->
+    
       {% block content %} {% endblock %}
     </div>
     <!-- /Main Wrapper -->
