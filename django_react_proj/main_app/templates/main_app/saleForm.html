@@ -49,7 +49,7 @@
                       <select class="select" name="{{ saleOrderLine_form.productId.name }}" id="{{ saleOrderLine_form.productId.id_for_label }}">
                           <option value="">Select a product</option>
                           {% for product in products %}
-                              <option value="{{ product.id }}" data-purchase-cost="{{ product.purchaseCost }}" data-image-url="{{ product.image.url }}">{{ product.name }}</option>
+                              <option value="{{ product.id }}" data-purchase-cost="{{ product.salePrice }}" data-image-url="{{ product.image.url }}">{{ product.name }}</option>
                           {% endfor %}
                       </select>
                   </div>
@@ -81,7 +81,7 @@
                 <table class="table">
                   <thead>
                     <tr>
-                      <th>Product ID</th>
+                      <th>Product Name</th>
                       <th>QTY</th>
                       <th class="text-end">Unit Cost(BD)</th>
                       <th class="text-end">Total Cost (BD)</th>
@@ -201,8 +201,6 @@
     // Append the new div to the display area
     displayArea.appendChild(div);
 
-    quantity_input.value = '';
-    productId_input.selectedIndex = 0;
     
 
   });
