@@ -13,6 +13,7 @@ from .models import Categories, Product,Customer,SaleOrder,SaleOrderLine,Vendor,
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.db.models import Sum, F
 from .forms import PurchaseOrderForm, PurchaseOrderLineForm ,SaleOrderForm,SaleOrderLineForm
+from django.db import transaction
 # Define the home view
 def home(request):
   form = AuthenticationForm()
@@ -223,7 +224,8 @@ class customerDelete(DeleteView):
 def saleForm(request, sale_id=None):
     customers = Customer.objects.all()
     products = Product.objects.all()
-    # Check if purchase_id is provided to determine if it's an update or add operation
+
+    # Check if sale_id is provided to determine if it's an update or add operation
     if sale_id:
         sale_instance = get_object_or_404(SaleOrder, pk=sale_id)
         title = "Update Sale"
@@ -234,29 +236,29 @@ def saleForm(request, sale_id=None):
     if request.method == 'POST':
         saleOrder_form = SaleOrderForm(request.POST, instance=sale_instance)
         saleOrderLine_form = SaleOrderLineForm(request.POST)
-        if saleOrder_form.is_valid():
-            print("SaleOrder form is valid")
 
-            # Save the PurchaseOrder instance (either a new one or an updated one)
+        if saleOrder_form.is_valid() and saleOrderLine_form.is_valid():
+            # Save the SaleOrder instance (either a new one or an updated one)
             sale_order = saleOrder_form.save()
 
-            if saleOrderLine_form.is_valid():
-                print("SaleOrderLine form is valid")
+            # Get the order lines array from the request POST data
+            order_lines = request.POST.getlist('orderlines[]')
 
-                # Create a new PurchaseOrderLine instance without saving it yet
-                sale_order_line = saleOrderLine_form.save(commit=False)
-                
-                # Set the purchaseId of the PurchaseOrderLine to the saved PurchaseOrder instance
-                sale_order_line.saleId = sale_order
-                # Save the PurchaseOrderLine
-                sale_order_line.save()
+            with transaction.atomic():
+                for order_line_data in order_lines:
+                    # Split the data to get product_id and quantity
+                    product_id, quantity = order_line_data.split(',')
+                    
+                    # Create a new SaleOrderLine instance
+                    sale_order_line = SaleOrderLine()
+                    sale_order_line.saleId = sale_order
+                    sale_order_line.productId = Product.objects.get(id=product_id)
+                    sale_order_line.quantity = quantity
+                    sale_order_line.save()
 
-                return redirect('saleList')  # You should use the URL name
-            else:
-                print("SaleOrderLine form is not valid. Errors:", saleOrderLine_form.errors)
+            return redirect('saleList')  # You should use the URL name
         else:
-            print("SaleOrder form is not valid. Errors:", saleOrder_form.errors)
-
+            print("Form validation failed. Errors:", saleOrder_form.errors, saleOrderLine_form.errors)
     else:
         saleOrder_form = SaleOrderForm(instance=sale_instance)
         saleOrderLine_form = SaleOrderLineForm()
@@ -264,10 +266,9 @@ def saleForm(request, sale_id=None):
     context = {
         'saleOrder_form': saleOrder_form,
         'saleOrderLine_form': saleOrderLine_form,
-        'title': title,  # Pass the title to the template for distinguishing between add and update
+        'title': title,
         'customers': customers,
         'products': products,
-
     }
 
     return render(request, 'main_app/saleForm.html', context)

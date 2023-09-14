@@ -9,7 +9,7 @@
         </div>
       </div>
       <div class="card">
-        <form action="." method="POST" id="myForm">
+        <form action="." method="POST" id="myForm" enctype="multipart/form-data">
           {% csrf_token %}
           <div class="card-body">
             <div class="row">
@@ -126,6 +126,7 @@
               </div>
             </div>
           </div>
+          <input type="hidden" name="orderlines" id="orderlines">
         </form>
       </div>
     </div>
@@ -189,8 +190,11 @@
     
     values.push(`<td><a class="delete-set"><img src="/static/source/assets/img/icons/delete.svg" alt="Delete"></a>`);
 
-      console.log(`values : ${values}`)
-      console.log(`orderlines : ${orderlines}`)
+    console.log(`values : ${values}`)
+    console.log(`orderlines : ${orderlines}`)
+
+    document.getElementById('orderlines').value = orderlines.join(';'); // Use a separator like semicolon
+    
     // Set the content of the new div to the collected values
     div.innerHTML = values.join('</td>');
 
@@ -199,6 +203,7 @@
 
     quantity_input.value = '';
     productId_input.selectedIndex = 0;
+    
 
   });
 </script>
