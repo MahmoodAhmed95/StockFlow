@@ -132,7 +132,7 @@ class App extends Component {
                     <CardMedia
                       component="img"
                       alt={product.name}
-                      height="200"
+                      height="201"
                       image={product.image}
                     />
                     <CardContent>
