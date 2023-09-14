@@ -49,7 +49,7 @@
                       <select class="select" name="{{ saleOrderLine_form.productId.name }}" id="{{ saleOrderLine_form.productId.id_for_label }}">
                           <option value="">Select a product</option>
                           {% for product in products %}
-                              <option value="{{ product.id }}">{{ product.name }}</option>
+                              <option value="{{ product.id }}" data-purchase-cost="{{ product.purchaseCost }}" data-image-url="{{ product.image.url }}">{{ product.name }}</option>
                           {% endfor %}
                       </select>
                   </div>
@@ -89,29 +89,7 @@
                     </tr>
                   </thead>
                   {% comment %} <div id="displayArea"></div> {% endcomment %}
-                  
                   <tbody id="displayArea">
-                    <tr>
-                      <td class="productimgname">
-                        <a class="product-img">
-                          <img
-                            src="{% static 'source/assets/img/product/product7.jpg' %}"
-                            alt="product"
-                          />
-                        </a>
-                        <a href="javascript:void(0);">Apple Earpods</a>
-                      </td>
-                      <td>10.00</td>
-                      <td class="text-end">2000.00</td>
-                      <td class="text-end">2000.00</td>
-                      <td>
-                        <a class="delete-set"
-                          ><img
-                            src="{% static 'source/assets/img/icons/delete.svg' %}"
-                            alt="Delete"
-                        /></a>
-                      </td>
-                    </tr>
                   </tbody>
                 </table>
               </div>
@@ -123,7 +101,7 @@
                   <ul>
                     <li class="total">
                       <h4>Grand Total</h4>
-                      <h5>$ 0.00</h5>
+                      <h5 id="grandTotal"></h5>
                     </li>
                   </ul>
                 </div>
@@ -153,47 +131,75 @@
     </div>
   </div>
 </div>
+
+
+
+
 <script>
   // Get reference to the display button
   const displayButton = document.getElementById('displayButton');
-
-  // Get references to the specific input fields and select elements
-  const customerid_input = document.getElementById('{{ saleOrder_form.customerId.id_for_label }}');
-  const saleDate_input = document.getElementById('{{ saleOrder_form.saleDate.id_for_label }}');
-  const confirmed_input = document.getElementById('{{ saleOrder_form.confirmed.id_for_label }}');
-  const productId_input = document.getElementById('{{ saleOrderLine_form.productId.id_for_label }}');
-  const quantity_input = document.getElementById('{{ saleOrderLine_form.quantity.id_for_label }}');
-
-  // Get reference to the display area
-  const displayArea = document.getElementById('displayArea');
-
-  // Add a click event listener to the button
+  let orderlines = [];
+  let amounttotal = 0;
   displayButton.addEventListener('click', function() {
-      // Create a new div element for each set of values
-      const div = document.createElement('tr');
+    console.log(`display button clicked`);
+    // Get references to the specific input fields and select elements
+    
 
-      // Initialize an array to store the values
-      const values = [];
+    const productId_input = document.getElementById('{{ saleOrderLine_form.productId.id_for_label }}');
+    const productId_index = productId_input.selectedIndex;
 
-      // Get the values from the specific input fields and select elements
-      const customerid_value = customerid_input.value;
-      const saleDate_value = saleDate_input.value;
-      const confirmed_value = confirmed_input.value;
-      const productId_value = productId_input.value;
-      const quantity_value = quantity_input.value;
+    const quantity_input = document.getElementById('{{ saleOrderLine_form.quantity.id_for_label }}');
+    const quantity_value = quantity_input.value;
 
-      // Add the values to the values array
-      values.push(`<td>${productId_value} </td>`);
-      values.push(`<td>${quantity_value} </td>`);
-      values.push(`<td class="text-end">20</td>`);
-      values.push(`<td class="text-end">200</td>`);
-      values.push(`<td><a class="delete-set"><img src="/static/source/assets/img/icons/delete.svg" alt="Delete"></a>`);
+    const productIdSelect = document.getElementById('{{ saleOrderLine_form.productId.id_for_label }}');
+    const selectedOption = productIdSelect.options[productIdSelect.selectedIndex];
 
-      // Set the content of the new div to the collected values
-      div.innerHTML = values.join('</td>');
+    const productName = productId_input.options[productId_index].text;
 
-      // Append the new div to the display area
-      displayArea.appendChild(div);
+    const purchaseCost = selectedOption.getAttribute('data-purchase-cost');
+    console.log('Selected Purchase Cost:', purchaseCost);
+
+    const productImage = selectedOption.getAttribute('data-image-url');
+    console.log('Selected Purchase Image:', productImage);
+
+    const totalCost = (purchaseCost * quantity_value).toFixed(3);
+    console.log(`totalcost : ${totalCost}`)
+    // Get reference to the display area
+    const displayArea = document.getElementById('displayArea');
+    // Create a new div element for each set of values
+    const div = document.createElement('tr');
+
+    // Initialize an array to store the values
+    const values = [];
+    
+    // Add the values to the values array
+    
+    values.push(`<td class="productimgname"> <a class="product-img"> <img src="${productImage}" alt="product"/> </a> ${productName} </td>`);
+    orderlines.push(productId_input.value);
+
+    values.push(`<td>${quantity_value} </td>`);
+    orderlines.push(quantity_value);
+
+    values.push(`<td class="text-end">${purchaseCost}</td>`);
+    values.push(`<td class="text-end">${totalCost}</td>`);
+
+    amounttotal += parseFloat(totalCost);
+    const formattedamounttotal = amounttotal.toFixed(3);
+    document.getElementById('grandTotal').innerHTML = `BD ${formattedamounttotal}`;
+    
+    values.push(`<td><a class="delete-set"><img src="/static/source/assets/img/icons/delete.svg" alt="Delete"></a>`);
+
+      console.log(`values : ${values}`)
+      console.log(`orderlines : ${orderlines}`)
+    // Set the content of the new div to the collected values
+    div.innerHTML = values.join('</td>');
+
+    // Append the new div to the display area
+    displayArea.appendChild(div);
+
+    quantity_input.value = '';
+    productId_input.selectedIndex = 0;
+
   });
 </script>
 
